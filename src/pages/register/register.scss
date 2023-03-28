@@ -1,0 +1,89 @@
+.register {
+    background:  url(https://www.gannett-cdn.com/presto/2021/10/16/USAT/a33bf9ac-d8e6-4a7e-8ade-a2e52cf4c2c8-Holidays.png?crop=1593,897,x0,y0&width=1593&height=897&format=pjpg&auto=webp) center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .register-container {
+        width: 50%;
+        padding: 42px;
+        border: 1px solid #e6e6e6;
+        border-radius: 4px;
+        background-color: #fff;
+        -webkit-box-shadow: 0px 5px 40px #00000008;
+        box-shadow: 0px 5px 40px #00000008;
+
+        .header {
+            .heading {
+                font-size: 22px;
+                font-weight: 700;
+                color: #081828;
+                margin-bottom: 10px;
+            }
+            .title {
+                color: #888888;
+                font-size: 14px;
+                line-height:12px;
+            }
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            margin-top: 30px;
+
+            .input-group {
+                margin-bottom: 15px;
+
+                label {
+                    font-size: 14px;
+                    color: #888888;
+                    margin-bottom: 5px;
+                }
+                .input {
+                    width: 100%;
+                    border: 1px solid #888;
+                    position: relative;
+                    
+                    background-color: white;
+                    &:focus-within {
+                        border-color: #0167f3;
+                    }
+                    input {
+                        width: 100%;
+                        padding: 10px;
+                        border: none;
+                        outline: none;
+                        background-color: transparent;
+                    }
+                    span{
+                        position: absolute;
+                        right: 5px;
+                        top: 50%;
+                        cursor: pointer;
+                        transform: translateY(-50%);
+                    }
+                }   
+            }
+            button {
+                cursor: pointer;
+                text-transform: capitalize;
+                font-size: 14px;
+                font-weight: 600;
+                padding: 13px 30px;
+                background-color: #0167f3;
+                color: #fff;
+                border: none;
+                border-radius: 3px;
+            }
+            .outer-link {
+                display: block;
+                font-size: 14px;
+                font-weight: 500;
+                color: #081828;
+                margin-top: 30px;
+                text-align: center;
+            }
+        }
+    }
+}
