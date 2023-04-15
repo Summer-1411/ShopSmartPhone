@@ -5,6 +5,12 @@ $themes: (
         bgSoft: #f6f3f3,
         textColorSoft: #555,
         border: lightgray,
+        textHover: rgb(50, 203, 213),
+        bgHover: rgb(110, 110, 105),
+        textBold: #000,
+        colorPink: #d83131,
+        pageColor: orange,
+        
     ),
     dark: (textColor: whitesmoke,
         bg: #222,
@@ -12,6 +18,11 @@ $themes: (
         bgSoft: #333,
         textColorSoft: lightgray,
         border: #444,
+        textHover: white,
+        textBold: #fff,
+        bgHover: rgb(18, 29, 116),
+        colorPink: #d83131,
+        pageColor: orange,
     )
 );
 * {
@@ -20,6 +31,7 @@ $themes: (
     box-sizing: border-box;
     font-family: 'Manrope', sans-serif;
 }
+
 
 
 @mixin themify($themes) {
@@ -54,5 +66,27 @@ $themes: (
 @mixin tablet {
     @media  (min-width: 481px) and ( max-width: 960px) {
         @content;
+    }
+}
+
+.wrapper-container {
+    @include themify($themes) {
+        background-color: themed("bgSoft");
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.admin-wrapper {
+    .container-admin {
+        display: flex;
+        .side-bar {
+            flex: 2;
+        }
+        .main {
+            flex: 8;
+        }
     }
 }
