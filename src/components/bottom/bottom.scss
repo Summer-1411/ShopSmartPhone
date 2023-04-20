@@ -1,0 +1,72 @@
+@import "../../style.scss";
+
+.bottom {
+    @include themify($themes) {
+        background-color: themed("bg");
+        border-top: 1px solid themed("border");
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        .bottom-top {
+            max-width: 1200px;
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            padding: 25px;
+            gap: 30px;
+            .item {
+                flex: 1;
+
+                .heading {
+                    font-size: 20px;
+                    color: themed("textBold");
+                    font-weight: 900;
+                    margin-bottom: 10px;
+                    display: flex;
+                    align-items: center;
+
+                    .heading-red {
+                        color: themed("colorPink");
+                        margin-left: 8px;
+                    }
+                }
+                .item-content{
+                    font-size: 14px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    .item-content-row {
+                        display: flex;
+                        .row-title {
+                            
+                            color: themed("colorPink");
+                            font-weight: 700;
+                            min-width: 100px;
+                            &.row-title-center {
+                                min-width: 180px;
+                            }
+                        }
+                        .row-content {
+                            cursor: pointer;
+                            color: themed("textColorSoft");
+                            &:hover {
+                                opacity: 0.9;
+                            }
+                        }   
+                    }
+                }
+            }
+        }
+        .bottom-bottom {
+            text-align: center;
+            line-height: 60px;
+            color: themed("bg");
+            background-color: themed("colorPink");
+            font-weight: 1000;
+            font-size: 24px;
+            width: 100%;
+        }
+    }
+}

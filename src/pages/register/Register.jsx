@@ -2,6 +2,7 @@ import './register.scss'
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Register() {
     const [eye, setEye]= useState(false)
@@ -47,7 +48,7 @@ export default function Register() {
                     </div>
                     <button>Đăng ký</button>
                     <div className="outer-link">
-                        Bạn đã có tài khoản? Đăng nhập
+                        Bạn đã có tài khoản? <Link to="/login">Đăng nhập</Link> 
                     </div>
                 </form>
             </div>

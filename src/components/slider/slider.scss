@@ -1,0 +1,90 @@
+/* slider */
+.discover-slider-wrap {
+    width: 100%;
+    min-height: 240px;
+    padding: 20px 0;
+    overflow: hidden;
+    position: relative;
+}
+.discover-slider-main {
+    min-height: 210px;
+    display: flex;
+    margin-left: -15px;
+    margin-right: -15px;
+    transition: all 0.25s linear;
+    position: relative;
+    justify-content: center;
+}
+.discover-slider-item {
+    /* flex: 1 0 33.333%; */
+    width: 33.333%;
+    height: 100%;
+    padding: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    position: absolute;
+    transition: all 0.9s linear;
+}
+.discover-slider-item.index0 {
+    opacity: 1;
+    
+    transform: translateX(-100%) 
+}
+.discover-slider-item.index1 {
+    opacity: 1;
+    transform: translateX(0) 
+}
+.discover-slider-item.index2 {
+    opacity: 1;
+    transform: translateX(100%) 
+}
+.discover-slider-item.index3{
+    opacity: 0;
+    transform: translateX(200%) ;
+}
+.discover-slider-item.index4,
+.discover-slider-item.index5,
+.discover-slider-item.index6,
+.discover-slider-item.index7 {
+    opacity: 0;
+    transform: translateX(0) ;
+}
+.discover-slider-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.discover-btn {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 100rem;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    font-size: 45px;
+    background-color: rgba(240, 248, 255, 0.171);
+    display: none;
+    cursor: pointer;
+    z-index: 999;
+}
+.discover-btn-prev{
+    left: 12px;
+}
+.discover-btn-next {
+    right: 12px;
+}
+.discover-btn:hover {
+    opacity: 0.8;
+}
+.discover-slider-wrap:hover .discover-btn{
+    display: block;
+}
+
+.zingchat-week-image {
+    width: 100%;
+    border-radius: 5px;
+    object-fit: cover;
+}

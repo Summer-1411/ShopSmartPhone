@@ -2,7 +2,7 @@ import './login.scss'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useState } from 'react';
-
+import { Link } from 'react-router-dom';
 export default function Login() {
     const [eye, setEye]= useState(false)
     return (
@@ -42,7 +42,7 @@ export default function Login() {
                     
                     <button>Đăng nhập</button>
                     <div className="outer-link">
-                        Bạn không có tài khoản? Đăng ký ở đây
+                        Bạn không có tài khoản? <Link to="/register">Đăng ký</Link> 
                     </div>
                 </form>
             </div>

@@ -1,0 +1,115 @@
+@import "../../style.scss";
+
+.profile-wrapper {
+    @include themify($themes) {
+        padding: 0 10px;
+
+        .profile-heading {
+            border-bottom: 1px solid themed("border");
+            padding-bottom: 15px;
+
+            .profile-title {
+                font-size: 20px;
+                font-weight: bold;
+                color: themed("textBold");
+            }
+
+            .profile-infor {
+                font-size: 16px;
+                color: themed("textColorSoft");
+            }
+        }
+
+        .profile-content {
+            padding-top: 15px;
+            display: flex;
+
+            .profile-content-left {
+                flex: 7;
+                padding-right: 50px;
+                border-right: 1px solid themed("border");
+                .profile-content-left-item {
+                    display: flex;
+                    padding-bottom: 30px;
+                    align-items: center;
+
+                    .title {
+                        flex: 3;
+                        text-align: right;
+                        color: themed("textColorSoft");
+                    }
+
+                    .item-value {
+                        padding-left: 20px;
+                        flex: 7;
+
+                        input {
+                            width: 100%;
+                            padding: 8px;
+                            outline: 0;
+                            font-size: 16px;
+                            border: 1px solid themed("border");
+                        }
+
+                        .gender {
+                            display: flex;
+                            align-items: center;
+                            gap: 30px;
+                            .gender-item {
+                                display: flex;
+                                align-items: center;
+                                margin-right: 20px;
+                                .check-radio {
+                                    color: themed("textColorSoft");
+                                    margin-right: 10px;
+                                    &.selected {
+                                        color: themed("colorPink");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .profile-content-right {
+                flex: 3;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+                .avatar-user {
+                    width: 100px;
+                    height: 100px;
+                    object-fit: cover;
+                    border-radius: 50%;
+                    margin-bottom: 20px;
+                } 
+                input {
+                    display: none;
+                }
+                .btn-select-img {
+                    cursor: pointer;
+                    padding: 10px 15px;
+                    border: 1px solid themed("border");
+                }
+            }
+        }
+        .profile-bottom{
+            display: flex;
+            justify-content: center;
+            .btn-save {
+                color: white;
+                background-color: themed("colorPink");
+                padding: 10px 30px;
+                border-radius: 5px;
+                cursor: pointer;
+                border: 1px solid themed("border");
+                &:hover {
+                    opacity: 0.9;
+                }
+            }
+        }
+    }
+}

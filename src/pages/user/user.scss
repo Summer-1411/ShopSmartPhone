@@ -1,0 +1,59 @@
+@import "../../style.scss";
+
+.user-wrapper {
+    @include themify($themes) {
+        max-width: 1200px;
+        width: 100%;
+        display: flex;
+        margin: 20px;
+        padding: 15px;
+        background-color: themed("bg");
+        -webkit-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+        -moz-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+        box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+        min-height: calc(100vh - 370px);
+        .left-user {
+            flex: 2;
+            .heading-left {
+                display: flex;
+                align-items: center;
+                .avatar-user {
+                    width: 60px;
+                    height: 60px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
+                .username {
+                    margin-left: 15px;
+                    font-size: 16px;
+                    font-weight: bold;
+                    color: themed("textBold");
+                }
+            }
+            .content-left {
+                padding-top: 20px;
+                .item-content {
+                    display: flex;
+                    align-items: center;
+                    padding: 10px 0;
+                    text-decoration: none;
+                    color: themed("textBold");
+                    cursor: pointer;
+                    .item-title {
+                        margin-left: 10px;
+                    }
+                    &:hover {
+                        color: #d0011b;
+                    }
+                    &.active {
+                        color: #d0011b;
+                    }
+                }
+                
+            }
+        }
+        .right-user {
+            flex: 8;
+        }
+    }
+}
