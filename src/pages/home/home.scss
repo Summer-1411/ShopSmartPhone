@@ -1,0 +1,57 @@
+@import "../../style.scss";
+
+.home {
+    @include themify($themes) {
+        background-color: themed("bgSoft");
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        .home-container {
+            max-width: 1200px;
+            width: 100%;
+            display: block;
+            background-color: themed("bg");
+            -webkit-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+            -moz-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+            box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+
+            .home-heading {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 20px 10px;
+                border-bottom: 1px solid themed("border");
+                .home-title {
+                    font-size: 22px;
+                    font-weight: 900;
+                    flex: 1;
+
+                    color: themed("textColorSoft");
+                }
+                .home-manufacturer {
+                    display: flex;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    gap: 10px;
+                    flex: 2;
+
+                    .manufacturer-item {
+                        font-size: 16px;
+                        color: themed("textColorSoft");
+                        padding: 4px 8px;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        border: 1px solid themed("border");
+                        background-color: themed("bgSoft");
+
+                        &:hover {
+                            background-color: themed("bgHover"); 
+                            color: themed("textHover");
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
