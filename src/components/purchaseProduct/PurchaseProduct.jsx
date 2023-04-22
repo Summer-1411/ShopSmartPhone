@@ -1,4 +1,5 @@
-import React from './purchaseProduct.scss'
+
+import './purchaseProduct.scss'
 
 export default function PurchaseProduct() {
     return (

@@ -8,7 +8,11 @@ import {
 } from "react-router-dom";
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
-import NavBar from './components/navbar/NavBar';
+
+
+// import NavBar from './components/navbar/NavBar';
+import NavBar from "./components/navbar/Navbar"
+
 import Bottom from './components/bottom/Bottom'
 import Home from './pages/home/Home';
 import ProductDetail from './pages/productDetail/ProductDetail';

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import CartItem from '../../components/cartItem/CartItem';
+
 import './cart.scss'
 
 export default function Cart() {
