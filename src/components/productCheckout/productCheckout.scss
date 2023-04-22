@@ -1,0 +1,51 @@
+@import "../../style.scss";
+
+.productCheckout-content {
+    @include themify($themes) {
+        display: flex;
+        align-items: center;
+        padding-bottom: 20px;
+        border-bottom: 1px solid themed("border");
+
+        .productCheckout-content-left {
+            flex: 8;
+            display: flex;
+            align-items: center;
+
+            .img-product {
+                width: 100px;
+                height: 100px;
+                object-fit: cover;
+                margin-right: 20px;
+            }
+
+            .infor-product {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+
+                .name-product {
+                    color: themed("textBold");
+                    font-size: 18px;
+                    font-weight: 600;
+                }
+
+                .filter-product {
+                    color: themed("textColorSoft");
+                    font-size: 16px;
+                }
+            }
+        }
+
+        .productCheckout-content-right {
+            flex: 2;
+
+            .price-product {
+                font-weight: bold;
+                font-size: 18px;
+                color: themed("colorPink");
+                text-align: right;
+            }
+        }
+    }
+}
