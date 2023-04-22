@@ -8,9 +8,14 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { IMAGE_DEFAULT, IMAGE_LINK } from "../../requestMethod";
 
 
 export default function NavBar() {
+    const currentUser = useSelector((state) => state.user.currentUser);
+    const cart = useSelector((state) => state.cart)
+    //console.log({cart});
     const [openOption, setOpenOption] = useState(false)
     const [category, setCategory] = useState("All category");
     const handleClickOption = (value) => {
@@ -24,12 +29,9 @@ export default function NavBar() {
                     <Link to="/" className="logoApp">
                         Summer Mobile
                     </Link>
-
                     <div>
                         <WbSunnyOutlinedIcon />
                     </div>
-
-
                     <div className="search">
                         <div className="selection">
                             <div onClick={() => { openOption ? setOpenOption(false) : setOpenOption(true) }} className="selection-title">
@@ -56,15 +58,22 @@ export default function NavBar() {
                     </div>
                 </div>
                 <div className="right">
-                    <Link to={"/cart"} style={{textDecoration:"none", color: "inset"}}>
+                    <Link to={"/cart"} className="icon-cart">
                         <ShoppingCartOutlinedIcon />
+                        {cart.count > 0 && (
+                            <div className="quantity-cart">
+                                {cart.count}
+                            </div>
+                        )}
+                        
                     </Link>
                     <EmailOutlinedIcon />
                     <NotificationsOutlinedIcon />
                     <Link to={"/user/profile"} className="user">
-                        <img src="https://leerit.com/media/blog/uploads/2016/11/12/2-1024-1029.jpg" alt="" />
-                        <span>Summer</span>
+                        <img src={currentUser.avatar ? `${IMAGE_LINK}/${currentUser.avatar}` : `${IMAGE_DEFAULT}`} alt="" />
+                        <span>{currentUser.username}</span>
                     </Link>
+                    
                 </div>
 
             </div>

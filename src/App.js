@@ -3,50 +3,39 @@ import './style.scss';
 import {
   createBrowserRouter,
   Navigate,
-  Outlet,
   RouterProvider,
 } from "react-router-dom";
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 
-
-// import NavBar from './components/navbar/NavBar';
-import NavBar from "./components/navbar/Navbar"
-
-import Bottom from './components/bottom/Bottom'
 import Home from './pages/home/Home';
 import ProductDetail from './pages/productDetail/ProductDetail';
 import Cart from './pages/cart/Cart';
 import User from './pages/user/User';
 import Profile from './components/profile/Profile';
-import Purchase from './components/purchase/Purchase';
-import PurchaseProduct from './components/purchaseProduct/PurchaseProduct';
+
 import Order from './pages/order/Order';
 
+import { useSelector } from 'react-redux';
+import Layout from './layout/Layout';
+
+
+
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
-  const currentUser = true
-  const Layout = () => {
-    return (
-      <div className="theme-light">
-          <NavBar />
-          <div className="wrapper-container">
-            <Outlet />
-          </div>
-          <Bottom />
-        </div>
-      
-    )
-  }
-  const ProtectedRoute = ({children}) => {
-    if(!currentUser){
+  const currentUser = useSelector((state) => state.user.currentUser);
+
+  const ProtectedRoute = ({ children }) => {
+    if (!currentUser) {
       return <Navigate to="/login" />
     }
     return children
   }
 
-  const Logged = ({children}) => {
-    if(currentUser){
+
+  const Logged = ({ children }) => {
+    if (currentUser) {
       return <Navigate to="/" />
     }
     return children
@@ -55,10 +44,10 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <ProtectedRoute><Layout/></ProtectedRoute>,
+      element: <ProtectedRoute><Layout /></ProtectedRoute>,
       children: [
         {
-          path:"/",
+          path: "/",
           element: <Home />
         },
         {
@@ -83,25 +72,7 @@ function App() {
             },
             {
               path: "purchase",
-              element: <Purchase />,
-              children: [
-                {
-                  path: "",
-                  element: <PurchaseProduct />
-                },
-                {
-                  path: "ordered",
-                  element: <h1>Đã đặt</h1>
-                },
-                {
-                  path: "complete",
-                  element: <h1>Hoàn thành</h1>
-                },
-                {
-                  path: "cancel",
-                  element: <h1>Đã huỷ</h1>
-                }
-              ]
+              element: <h1>Purchase</h1>
             },
             {
               path: "logout",
