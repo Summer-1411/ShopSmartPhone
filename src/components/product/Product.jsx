@@ -1,10 +1,11 @@
 import './product.scss'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import StarRateIcon from '@mui/icons-material/StarRate';
-
+import { Link } from 'react-router-dom';
+import { numberWithCommas } from '../../utils/formatMoney';
 export default function Product({ product }) {
     return (
-        <div  className="product-item">
+        <Link to={`/product/${product.id}`} className="product-item">
             <div className="wrapper-img">
                 <img className="img" src={product.img} alt='img-product' />
 
@@ -15,9 +16,8 @@ export default function Product({ product }) {
                     <div className="name-product">{product.name}</div>
 
                     <div className="price-product">
-                        {product.price} đ
+                        {numberWithCommas(product.priceRange)}
                     </div>
-
                 </div>
 
 
@@ -45,6 +45,6 @@ export default function Product({ product }) {
                 </div>
             </div>
 
-        </div>
+        </Link>
     )
 }
