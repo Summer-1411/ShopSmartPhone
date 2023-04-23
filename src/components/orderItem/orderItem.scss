@@ -1,0 +1,132 @@
+@import "../../style.scss";
+
+.orderItem-wrapper {
+    @include themify($themes) {
+        padding-bottom: 20px;
+        border-bottom: 1px solid themed("border");
+
+        .orderItem-content {
+            display: flex;
+            align-items: center;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            
+
+            .orderItem-content-left {
+                flex: 8;
+                display: flex;
+                align-items: center;
+
+                .img-product {
+                    width: 100px;
+                    height: 100px;
+                    object-fit: contain;
+                    margin-right: 20px;
+                }
+
+                .infor-product {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 4px;
+
+                    .name-product {
+                        color: themed("textBold");
+                        font-size: 18px;
+                        font-weight: 600;
+                    }
+
+                    .filter-product {
+                        color: themed("textColorSoft");
+                        font-size: 16px;
+                    }
+                }
+            }
+
+            .orderItem-content-right {
+                flex: 2;
+
+                .price-product {
+                    font-weight: bold;
+                    font-size: 18px;
+                    color: themed("colorPink");
+                    text-align: right;
+                }
+            }
+        }
+
+        .checkout-product {
+            display: flex;
+            align-items: center;
+
+            .checkout-product-left {
+                flex: 8;
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+
+                .name-customer {
+                    color: themed("textBold");
+                    font-weight: 700;
+                    font-size: 18px;
+                }
+
+                .phone-number {
+                    color: themed("textColorSoft");
+                }
+
+                .delivery-address {
+                    color: themed("textColorSoft");
+                }
+                .date-order {
+                    display: flex;
+                    align-items: center;
+                    gap: 4px;
+                    .title {
+                        color: themed("textBold");
+                        
+                    }
+                    .date-value {
+                        color: themed("textColorSoft");
+                    }
+                }
+            }
+
+            .checkout-product-right {
+                flex: 3;
+
+                .sum-price-checkout {
+                    display: flex;
+                    align-items: center;
+                    font-size: 18px;
+
+                    .price-order {
+                        flex: 1;
+                        font-weight: bold;
+                        font-size: 18px;
+                        color: themed("colorPink");
+                        text-align: right;
+
+                    }
+                }
+            }
+        }
+
+        .orderItem-bottom {
+            display: flex;
+            justify-content: flex-end;
+
+            .btn-delete {
+                cursor: pointer;
+                border-radius: 4px;
+                padding: 10px 30px;
+                color: white;
+                background-color: themed("colorPink");
+
+                &:hover {
+                    opacity: 0.9;
+                }
+            }
+        }
+    }
+}
+

@@ -1,0 +1,198 @@
+@import "../../style.scss";
+
+.purchaseProduct-wrapper {
+    @include themify($themes) {
+        padding-bottom: 20px;
+        border-bottom: 1px solid themed("border");
+
+        .purchaseProduct-content {
+            display: flex;
+            align-items: center;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            
+
+            .purchaseProduct-content-left {
+                flex: 8;
+                display: flex;
+                align-items: center;
+
+                .img-product {
+                    width: 100px;
+                    height: 100px;
+                    object-fit: contain;
+                    margin-right: 20px;
+                }
+
+                .infor-product {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 4px;
+
+                    .name-product {
+                        color: themed("textBold");
+                        font-size: 18px;
+                        font-weight: 600;
+                    }
+
+                    .filter-product {
+                        color: themed("textColorSoft");
+                        font-size: 16px;
+                    }
+                }
+            }
+
+            .purchaseProduct-content-right {
+                flex: 2;
+
+                .price-product {
+                    font-weight: bold;
+                    font-size: 18px;
+                    color: themed("colorPink");
+                    text-align: right;
+                }
+            }
+        }
+
+        .checkout-product {
+            display: flex;
+            align-items: center;
+
+            .checkout-product-left {
+                flex: 8;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+
+                .name-customer {
+                    color: themed("textBold");
+                    font-weight: 700;
+                    font-size: 18px;
+                }
+
+                .phone-number {
+                    color: themed("textColorSoft");
+                }
+
+                .delivery-address {
+                    color: themed("textColorSoft");
+                }
+                .date-order {
+                    display: flex;
+                    align-items: center;
+                    gap: 4px;
+                    .title {
+                        color: themed("textBold");
+                        
+                    }
+                    .date-value {
+                        color: themed("textColorSoft");
+                    }
+                }
+            }
+
+            .checkout-product-right {
+                flex: 3;
+
+                .sum-price-checkout {
+                    display: flex;
+                    align-items: center;
+                    font-size: 18px;
+
+                    .price-order {
+                        flex: 1;
+                        font-weight: bold;
+                        font-size: 18px;
+                        color: themed("colorPink");
+                        text-align: right;
+
+                    }
+                }
+            }
+        }
+
+        .purchaseProduct-bottom {
+            display: flex;
+            justify-content: flex-end;
+
+            .btn-delete {
+                cursor: pointer;
+                border-radius: 4px;
+                padding: 10px 30px;
+                color: white;
+                background-color: themed("colorPink");
+
+                &:hover {
+                    opacity: 0.9;
+                }
+            }
+        }
+
+        .wrapper-cancel {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(255, 255, 255, 0.359);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .cancel-container {
+                animation: show linear 0.25s;
+                padding: 25px;
+                background-color: white;
+                -webkit-box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .1), 0 2px 6px 2px rgba(60, 64, 67, .15);
+                -moz-box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .1), 0 2px 6px 2px rgba(60, 64, 67, .15);
+                box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .1), 0 2px 6px 2px rgba(60, 64, 67, .15);
+
+                .cancel-heading {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    font-size: 20px;
+                    color: #ee4d2d;
+                    
+                    font-weight: bold;
+                    margin-bottom: 20px;
+                }
+                .cancel-content {
+                    display: flex;
+                    align-items: center;
+                    gap: 30px;
+                    
+                    .btn {
+                        cursor: pointer;
+                        color: white;
+                        padding: 10px 20px;
+                        flex: 1;
+                        text-align: center;
+                        border-radius: 5px;
+                        &:hover {
+                            opacity: 0.9;
+                        }
+                        &.btn-agree {
+                            background-color: rgb(40, 40, 211);
+
+                        }
+                        &.btn-cancel {
+                            background-color: orangered;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@keyframes show {
+    from {
+        scale: 0;
+        opacity: 0;
+    }
+    to {
+        scale: 1;
+        opacity: 2;
+    }
+}

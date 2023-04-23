@@ -1,0 +1,59 @@
+@import "../../style.scss";
+
+.list-products {
+
+    @include themify($themes) {
+        .products {
+            // margin-top: 30px;
+            // background-color: themed("bg");
+            --spacing: 25px;
+            --columns: 4;
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: calc(-1 * var(--spacing));
+            margin-top: 15px;
+        }
+        .pages {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .pages-content {
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+                align-items: center;
+                position: relative;
+
+                .btn {
+                    position: absolute;
+                    top: -10px;
+                    padding: 10px;
+                    cursor: pointer;
+                    border-radius: 5px;
+                    &:hover {
+                        color: themed("textHover");
+                    }
+                }
+                .pre-page {
+                    left: -50px;
+                }
+                .next-page {
+                    right: -50px;
+                }
+                .page-number {
+                    padding: 0 10px;
+                    cursor: pointer;
+                    font-weight: 900;
+                    border-radius: 5px;
+                    &:hover {
+                        color: themed("textHover");
+                    }
+                    &.active {
+                        background-color:themed("colorPink") ;
+                        color: white;
+                    }
+                }
+            }
+        }
+    }
+}

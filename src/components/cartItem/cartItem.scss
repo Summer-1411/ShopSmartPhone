@@ -1,0 +1,76 @@
+@import "../../style.scss";
+
+
+
+.wrapper-row {
+    @include themify($themes) {
+        color: themed("textBold");
+        .infor-product {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            
+            img {
+                width: 80px;
+                height: auto;
+                object-fit: contain;
+            }
+
+            .name-product {
+                flex: 2;
+            }
+
+            .filter-product {
+                flex: 1;
+            }
+
+        }
+
+        .td-quantity-product {
+            position: relative;
+
+            .control-quantity {
+                width: 130px;
+                display: flex;
+                align-items: center;
+                border: 1px solid themed("border");
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+
+                .btn-control {
+                    padding: 0 15px;
+                    user-select: none;
+                    cursor: pointer;
+                }
+
+                .input {
+                    width: 50px;
+                    
+                    border-top: 0;
+                    border-bottom: 0;
+                    font-size: 16px;
+                    font-weight: 400;
+                    box-sizing: border-box;
+                    text-align: center;
+                    cursor: text;
+                    border-radius: 0;
+                    -webkit-appearance: none;
+                }
+            }
+
+
+        }
+
+        .tr-sum-price {
+            color: #d0011b;
+        }
+
+        .delete-product:hover {
+            color: #d0011b;
+            cursor: pointer;
+        }
+    }
+
+}

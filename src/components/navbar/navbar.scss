@@ -1,0 +1,170 @@
+@import "../../style.scss";
+
+.navbar {
+    @include themify($themes) {
+
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid themed("border");
+        position: sticky;
+        padding: 20px 0;
+        top: 0;
+        background-color: themed("bg");
+        color: themed("textColor");
+        z-index: 9999;
+
+        .navbar-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+
+            .left {
+                display: flex;
+                align-items: center;
+                gap: 30px;
+
+                span {}
+
+                .logoApp {
+                    text-decoration: none;
+                    color: themed("logo");
+                    font-weight: bold;
+                    font-size: 20px;
+                }
+
+                .search {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    border: 1px solid themed("border");
+                    border-radius: 5px;
+                    height: 45px;
+
+                    .selection {
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        height: 100%;
+                        padding: 0 15px;
+
+
+                        border-right: 1px solid themed("border");
+                        position: relative;
+                        user-select: none;
+
+                        .selection-title {
+                            height: 100%;
+                            width: 140px;
+                            justify-content: space-between;
+                            display: flex;
+                            align-items: center;
+                        }
+
+                        .icon-category {
+                            margin-left: 10px;
+                            transition: all 0.2 ease-in;
+
+                            &.open-option {
+                                transform: rotateZ(180deg);
+                            }
+                        }
+
+                        .option {
+                            display: none;
+                            position: absolute;
+                            top: calc(100% + 5px);
+                            left: 0;
+                            background-color: themed("bg");
+                            border: 1px solid themed("border");
+
+                            .option-item {
+                                padding: 10px 20px;
+                                background-color: themed("bg");
+                                transition: all 0.2s ease-in;
+
+                                &:hover {
+                                    background-color: themed("bgHover");
+                                    color: themed("textHover");
+                                }
+                            }
+
+                            &.open {
+                                display: block;
+                            }
+                        }
+                    }
+
+                    input {
+                        border: none;
+                        outline: none;
+                        width: 400px;
+                        background-color: transparent;
+                        color: themed("textColor");
+
+                        @include mobile {
+                            display: none;
+                        }
+
+                        @include tablet {
+                            width: 200px;
+                        }
+                    }
+                }
+            }
+
+            .right {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+
+                .icon-cart {
+                    text-decoration: none;
+                    color: initial;
+                    position: relative;
+                    padding: 8px;
+                    .quantity-cart {
+                        position: absolute;
+                        width: 20px;
+                        height: 20px;
+                        top: -5px;
+                        right: -5px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border-radius: 50%;
+                        background-color: themed('colorPink');
+                        color: white;
+                    }
+                }
+
+                @include mobile {
+                    display: none;
+                }
+
+                .user {
+                    display: flex;
+                    gap: 10px;
+                    font-weight: 500;
+                    align-items: center;
+
+                    @include tablet {
+                        display: none;
+                    }
+
+                    img {
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                    }
+
+                    span {}
+                }
+            }
+        }
+    }
+}
