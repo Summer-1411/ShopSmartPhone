@@ -1,39 +1,73 @@
+import { useEffect, useState } from 'react';
+import React from './purchaseProduct.scss'
+import axios from 'axios';
+import { BASE_URL } from '../../requestMethod';
+import { SUMMER_SHOP } from '../../constants';
+import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
+import { numberWithCommas } from '../../utils/formatMoney';
 
-import './purchaseProduct.scss'
+export default function PurchaseProduct({ bill,cancelOrder }) {
+    
+    //console.log("item: ", bill);
+    const [opnenCancellation, setOpnenCancellation] = useState(false)
+    const [products, setProducts] = useState([])
+    useEffect(() => {
+        const getProductByBill = async () => {
+            const res = await axios.get(`${BASE_URL}/order_detail/${bill.id}`, {
+                headers: { Authorization: `Bearer ${localStorage[SUMMER_SHOP]}` }
+            })
+            setProducts(res.data.products)
+            console.log(res.data);
+        }
+        getProductByBill();
+    }, [bill.id])
 
-export default function PurchaseProduct() {
+    const handleCalcellation = async () => {
+        await cancelOrder(bill.id)
+        setOpnenCancellation(false)
+    }
+    const dateString = bill.orderDate;
+    const date = new Date(dateString);
+    const formattedDate = date.toLocaleString();
+    
     return (
         <div className='purchaseProduct-wrapper'>
-            <div className="purchaseProduct-content">
-                <div className="purchaseProduct-content-left">
-                    <img src="https://i.pinimg.com/originals/32/b1/64/32b164c689fb0bd5673170c768653ec9.jpg" alt="" className="img-product" />
-                    <div className="infor-product">
-                        <div className="name-product">iPhone 14 Pro Max 128GB | Chính hãng VN/A</div>
-                        <div className="filter-product">
-                            Phân loại: 256G, White
+
+            {products.map(pro => (
+                <div key={pro.id} className="purchaseProduct-content">
+                    <div className="purchaseProduct-content-left">
+                        <img src={pro.img} alt="" className="img-product" />
+                        <div className="infor-product">
+                            <div className="name-product">{pro.name}</div>
+                            <div className="filter-product">
+                                Phân loại: {pro.size}, {pro.color}
+                            </div>
+                            <div className="quantity-product">
+                                x{pro.quantity}
+                            </div>
                         </div>
-                        <div className="quantity-product">
-                            x1
+                    </div>
+                    <div className="purchaseProduct-content-right">
+                        <div className="price-product">
+                            {numberWithCommas(pro.price)}
                         </div>
                     </div>
                 </div>
-                <div className="purchaseProduct-content-right">
-                    <div className="price-product">
-                        đ18.890.000
-                    </div>
-                </div>
-            </div>
-            
+            ))}
             <div className="checkout-product">
                 <div className="checkout-product-left">
                     <div className="name-customer">
-                        Le Van Tung
+                        {bill.fullname}
                     </div>
                     <div className="phone-number">
-                        0373984007
+                        {bill.phone}
                     </div>
                     <div className="delivery-address">
-                        Xóm Tân Mĩ I, xã Tân Quang, thành phố Sông Công, tỉnh Thái Nguyên
+                        {bill.shipping_address}
+                    </div>
+                    <div className="date-order">
+                        <div className="title">Ngày đặt :</div>
+                        <div className="date-value">{formattedDate}</div>
                     </div>
                 </div>
                 <div className="checkout-product-right">
@@ -42,16 +76,34 @@ export default function PurchaseProduct() {
                             Thành tiền :
                         </div>
                         <div className="price-order">
-                            đ18.890.000
+                            {numberWithCommas(bill.total_amount)}
                         </div>
                     </div>
                 </div>
             </div>
             <div className="purchaseProduct-bottom">
-                <div className="btn-delete">
+                <div className="btn-delete" onClick={() => setOpnenCancellation(true)}>
                     Huỷ đơn
                 </div>
             </div>
+            {opnenCancellation &&
+
+                <div className="wrapper-cancel" onClick={() => setOpnenCancellation(false)}>
+                    <div className="cancel-container" onClick={(e) => { e.stopPropagation() }} >
+                        <div className="cancel-heading">
+                            Bạn có chắc chắn muốn huỷ đơn hàng này <SentimentVeryDissatisfiedIcon />
+                        </div>
+                        <div className="cancel-content">
+                            <div className="btn btn-agree" onClick={handleCalcellation}>
+                                Đồng ý
+                            </div>
+                            <div className="btn btn-cancel" onClick={() => setOpnenCancellation(false)}>
+                                Huỷ bỏ
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     )
 }
