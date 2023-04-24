@@ -14,11 +14,14 @@
         background-color: themed("bg");
         color: themed("textColor");
         z-index: 9999;
+
         .navbar-container {
+            flex: 1;
             display: flex;
             align-items: center;
             justify-content: space-between;
             max-width: 1200px;
+
             .left {
                 display: flex;
                 align-items: center;
@@ -47,8 +50,8 @@
                         align-items: center;
                         height: 100%;
                         padding: 0 15px;
-                        
-                        
+
+
                         border-right: 1px solid themed("border");
                         position: relative;
                         user-select: none;
@@ -98,7 +101,7 @@
                     input {
                         border: none;
                         outline: none;
-                        width: 500px;
+                        width: 400px;
                         background-color: transparent;
                         color: themed("textColor");
 
@@ -117,6 +120,26 @@
                 display: flex;
                 align-items: center;
                 gap: 20px;
+
+                .icon-cart {
+                    text-decoration: none;
+                    color: initial;
+                    position: relative;
+                    padding: 8px;
+                    .quantity-cart {
+                        position: absolute;
+                        width: 20px;
+                        height: 20px;
+                        top: -5px;
+                        right: -5px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border-radius: 50%;
+                        background-color: themed('colorPink');
+                        color: white;
+                    }
+                }
 
                 @include mobile {
                     display: none;

@@ -1,0 +1,73 @@
+.orderpage-wrapper {
+    background-color: #f6faff;
+    padding: 30px;
+    min-height: calc(100vh - 100px);
+    position: relative;
+    .orderpage-container {
+
+
+        .orderpage-heading {
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 3px 7px 0 rgba(0, 0, 0, .13), 0 1px 2px 0 rgba(0, 0, 0, .11);
+
+            .title-item {
+                flex: 1;
+                padding: 16px 0;
+                font-size: 16px;
+                font-weight: bold;
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+                border-bottom: 2px solid transparent;
+
+                &.active {
+
+                    color: #3056d3;
+                    border-bottom: 2px solid #3056d3;
+                }
+
+                &:hover {
+                    color: #3056d3;
+                }
+            }
+        }
+
+        .orderpage-content {
+            background-color: #fff;
+            box-shadow: 0 3px 7px 0 rgba(0, 0, 0, .13), 0 1px 2px 0 rgba(0, 0, 0, .11);
+
+            margin-top: 30px;
+
+            .head-table-order {
+                padding: 16px 0;
+                display: flex;
+                align-items: center;
+                border-bottom: 1px solid #ccc;
+                border-top: 1px solid #ccc;
+
+                .col-item {
+                    flex: 1;
+                    padding: 10px;
+                    font-weight: bold;
+                }
+
+                .col-item-2 {
+                    flex: 2;
+                    padding: 10px;
+                    font-weight: bold;
+                }
+            }
+
+            .body-table-content {
+                margin-bottom: 80px;
+            }
+        }
+
+        
+
+    }
+
+}

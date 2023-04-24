@@ -16,7 +16,7 @@ const Layout = () => {
             const res = await axios.get(`${BASE_URL}/cart`, {
                 headers: {Authorization: `Bearer ${localStorage[SUMMER_SHOP]}`}
             })
-            console.log(res.data);
+            //console.log(res.data);
             dispatch(setCart(res.data.cart))
         }
         getCart();

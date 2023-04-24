@@ -2,30 +2,53 @@ import { useEffect, useState } from 'react'
 
 import './order.scss'
 import ProductCheckout from '../../components/productCheckout/ProductCheckout'
+import { useDispatch, useSelector } from 'react-redux'
+import { v4 as uuidv4 } from 'uuid';
+import { BASE_URL } from '../../requestMethod';
+import { SUMMER_SHOP } from '../../constants';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { clearCart } from '../../redux/cartRedux';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { toastOption } from '../../constants';
 
 export default function Order() {
-    const [listProvince, setListProvince] = useState([])
-    const [listDistrict, setListDistrict] = useState([])
-    const [listWard, setListWard] = useState([])
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const cart = useSelector((state) => state.cart)
+    const [inforAddressShip, setInforAddressShip] = useState({
+        listProvince: [],
+        listDistrict: [],
+        listWard: [],
+
+        province: null,
+        district: null,
+        ward: null,
+    })
+    const [openItem, setOpenItem] = useState({
+        openSelectProvince: false,
+        openSelectDistrict: false,
+        openSelectWard: false,
+    })
     const [address, setAddress] = useState("");
     const [addressDetail, setAddressDetail] = useState("");
-
-    const [province, setProvince] = useState()
-    const [district, setDistrict] = useState()
-    const [ward, setWard] = useState()
-
-    const [openSelectProvince, setOpenSelectProvince] = useState(false)
-    const [openSelectDistrict, setOpenSelectDistrict] = useState(false)
-    const [openSelectWard, setOpenSelectWard] = useState(false)
-
-
+    const [customer, setCustomer] = useState({
+        fullname: "",
+        phone: "",
+        note: ""
+    })
+    const [methodShip, setMethodShip] = useState("Giao hàng tận nơi")
+    console.log("customer: ", customer);
+    console.log("methodShip: ", methodShip);
     useEffect(() => {
         const getProvinces = () => {
             fetch("https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1")
                 .then((response) => response.json())
                 .then((value) => {
                     let dt = value.data
-                    setListProvince(dt.data)
+                    setInforAddressShip(prev => ({ ...prev, listProvince: dt.data }))
+                    //setListProvince(dt.data)
                 })
                 .catch((error) => {
                     console.error('Error:', error);
@@ -36,82 +59,155 @@ export default function Order() {
 
     useEffect(() => {
         const getDistricts = () => {
-            province && fetch(`https://vn-public-apis.fpo.vn/districts/getByProvince?provinceCode=${province.code}&limit=-1`)
+            inforAddressShip.province && fetch(`https://vn-public-apis.fpo.vn/districts/getByProvince?provinceCode=${inforAddressShip.province.code}&limit=-1`)
                 .then((response) => response.json())
                 .then((value) => {
                     let dt = value.data
-                    setListDistrict(dt.data)
+                    setInforAddressShip(prev => ({ ...prev, listDistrict: dt.data }))
+                    //setListDistrict(dt.data)
                 })
                 .catch((error) => {
                     console.error('Error:', error);
                 });
         }
         getDistricts()
-    }, [province])
+    }, [inforAddressShip.province])
 
     useEffect(() => {
         const getWards = () => {
-            district && fetch(`https://vn-public-apis.fpo.vn/wards/getByDistrict?districtCode=${district.code}&limit=-1`)
+            inforAddressShip.district && fetch(`https://vn-public-apis.fpo.vn/wards/getByDistrict?districtCode=${inforAddressShip.district.code}&limit=-1`)
                 .then((response) => response.json())
                 .then((value) => {
                     let dt = value.data
-                    setListWard(dt.data)
+                    setInforAddressShip(prev => ({ ...prev, listWard: dt.data }))
+                    //setListWard(dt.data)
                 })
                 .catch((error) => {
                     console.error('Error:', error);
                 });
         }
         getWards();
-    }, [district])
+    }, [inforAddressShip.district])
 
     useEffect(() => {
-        ward && addressDetail ? setAddress(`${addressDetail}, ${ward.path_with_type}`) : setAddress("");
-    }, [ward, addressDetail]);
+        inforAddressShip.ward && addressDetail ? setAddress(`${addressDetail}, ${inforAddressShip.ward.path_with_type}`) : setAddress("");
+    }, [inforAddressShip.ward, addressDetail]);
 
-    console.log({
-        address
-    }); 
-    // console.log({
-    //     addressDetail
-    // });
+    console.log(address);
 
-    // console.log({
-    //     province,
-    //     district,
-    //     ward
-    // });
 
     const handleOpenListProvince = () => {
-        setOpenSelectProvince(!openSelectProvince)
-        setOpenSelectDistrict(false)
-        setOpenSelectWard(false)
+        setOpenItem(prev => ({
+            ...prev,
+            openSelectProvince: !prev.openSelectProvince,
+            openSelectDistrict: false,
+            openSelectWard: false
+        }))
     }
     const handleOpenListDistrict = () => {
-        setOpenSelectDistrict(!openSelectDistrict)
-        setOpenSelectProvince(false)
-        setOpenSelectWard(false)
+        setOpenItem(prev => ({
+            ...prev,
+            openSelectDistrict: !prev.openSelectDistrict,
+            openSelectProvince: false,
+            openSelectWard: false
+        }))
     }
     const handleOpenListWard = () => {
-        setOpenSelectWard(!openSelectWard);
-        setOpenSelectDistrict(false)
-        setOpenSelectProvince(false)
+        setOpenItem(prev => ({
+            ...prev,
+            openSelectWard: !prev.openSelectWard,
+            openSelectDistrict: false,
+            openSelectProvince: false
+        }))
     }
 
     const handleSelectProvince = (pro) => {
-        setProvince(pro)
-        setOpenSelectProvince(false)
-        setDistrict(null)
-        setWard(null)
-
+        setInforAddressShip(prev => ({
+            ...prev,
+            province: pro,
+            district: null,
+            ward: null,
+            listDistrict: [],
+            listWard: []
+        }))
+        //setProvince(pro)
+        setOpenItem(prev => ({
+            ...prev,
+            openSelectProvince: false
+        }))
     }
     const handleSelectDistrict = (dis) => {
-        setDistrict(dis)
-        setOpenSelectDistrict(false)
-        setWard(null)
+        setInforAddressShip(prev => ({
+            ...prev,
+            district: dis,
+            ward: null,
+            listWard: []
+        }))
+        setOpenItem(prev => ({
+            ...prev,
+            openSelectDistrict: false
+        }))
     }
     const handleSelectWard = (ward) => {
-        setWard(ward);
-        setOpenSelectWard(false);
+        setInforAddressShip(prev => ({
+            ...prev,
+            ward: ward,
+        }))
+        setOpenItem(prev => ({
+            ...prev,
+            openSelectWard: false
+        }))
+    }
+    const handleChange = (e) => {
+        setCustomer(prev => ({
+            ...prev,
+            [e.target.name]: e.target.value
+        }))
+    }
+    let checkCondition = () => {
+        if(!customer.fullname || !customer.phone){
+            toast.error('Bạn vui lòng nhập tên và số điện thoại !', toastOption);
+            return false
+        }else {
+            if(!address){
+                toast.error('Vui lòng chọn địa chỉ giao hàng !', toastOption);
+                return false
+            }
+        }
+        return true
+    }
+    console.log("products: ", cart.products);
+    const handleOrder = async () => {
+        let check = checkCondition();
+        if(check){
+            try {
+                const res = await axios.post(`${BASE_URL}/order`, 
+                {
+                    fullname: customer.fullname,
+                    phone: customer.phone,
+                    address: address,
+                    methodShip: methodShip,
+                    note: customer.note,
+                    total: cart.total,
+                    products: [...cart.products]
+                },
+                {
+                    headers: {Authorization: `Bearer ${localStorage[SUMMER_SHOP]}`}
+                })
+                toast.success(res.data.message, toastOption);
+                dispatch(clearCart());
+                const clearCartCurrentUser = await axios.delete(`${BASE_URL}/cart/clear`, {
+                    headers: {Authorization: `Bearer ${localStorage[SUMMER_SHOP]}`}
+                })
+                console.log({res, clearCartCurrentUser});
+                
+                navigate("/user/purchase")
+                
+            } catch (error) {
+                toast.error(error.response.data.message, toastOption);
+            }
+            
+        }
     }
     return (
         <div className='order-wrapper'>
@@ -124,10 +220,22 @@ export default function Order() {
                 </div>
                 <div className="user-infor">
                     <div className="user-infor-item">
-                        <input type="text" name='fullname' placeholder='Họ tên' />
+                        <input
+                            type="text"
+                            name='fullname'
+                            placeholder='Họ tên'
+                            value={customer.fullname}
+                            onChange={(e) => handleChange(e)}
+                        />
                     </div>
                     <div className="user-infor-item">
-                        <input type="text" name='phoneNumber' placeholder='Số điện thoại' />
+                        <input
+                            type="text"
+                            name='phone'
+                            placeholder='Số điện thoại'
+                            value={customer.phone}
+                            onChange={(e) => handleChange(e)}
+                        />
                     </div>
                 </div>
 
@@ -139,11 +247,11 @@ export default function Order() {
                 <div className="address-infor">
                     <div className="address-infor-item">
                         <div className="title-address" onClick={handleOpenListProvince}>
-                            {province ? province.name : "Tỉnh/Thành phố"}
+                            {inforAddressShip.province ? inforAddressShip.province.name : "Tỉnh/Thành phố"}
                         </div>
-                        {openSelectProvince &&
+                        {openItem.openSelectProvince &&
                             <div className="list-option">
-                                {listProvince && listProvince.map((pro) => (
+                                {inforAddressShip.listProvince && inforAddressShip.listProvince.map((pro) => (
                                     <div
                                         key={pro._id}
                                         className="option-item"
@@ -157,11 +265,11 @@ export default function Order() {
                     </div>
                     <div className="address-infor-item">
                         <div className="title-address" onClick={handleOpenListDistrict}>
-                            {district ? district.name_with_type : "Quận/Huyện"}
+                            {inforAddressShip.district ? inforAddressShip.district.name_with_type : "Quận/Huyện"}
                         </div>
-                        {openSelectDistrict &&
+                        {openItem.openSelectDistrict &&
                             <div className="list-option">
-                                {listDistrict && listDistrict.map((dis) => (
+                                {inforAddressShip.listDistrict && inforAddressShip.listDistrict.map((dis) => (
                                     <div
                                         key={dis._id}
                                         className="option-item"
@@ -176,11 +284,11 @@ export default function Order() {
 
                     <div className="address-infor-item">
                         <div className="title-address" onClick={handleOpenListWard}>
-                            {ward ? ward.name_with_type : "Phường/Xã"}
+                            {inforAddressShip.ward ? inforAddressShip.ward.name_with_type : "Phường/Xã"}
                         </div>
-                        {openSelectWard &&
+                        {openItem.openSelectWard &&
                             <div className="list-option">
-                                {listWard && listWard.map((ward) => (
+                                {inforAddressShip.listWard && inforAddressShip.listWard.map((ward) => (
                                     <div
                                         key={ward._id}
                                         className="option-item"
@@ -195,21 +303,46 @@ export default function Order() {
                     </div>
                 </div>
                 <div className="address-detail">
-                    <input 
-                    type="text" 
-                    className="input-address-detail" 
-                    placeholder='Địa chỉ cụ thể'
-                    value={addressDetail}
-                    onChange={(e) => setAddressDetail(e.target.value)}
+                    <input
+                        type="text"
+                        className="input-address-detail"
+                        placeholder='Địa chỉ cụ thể'
+                        value={addressDetail}
+                        onChange={(e) => setAddressDetail(e.target.value)}
+                    />
+                </div>
+            </div>
+            <div className="method-checkout">
+                <div className="checkout-item">
+                    <div className="item">
+                        <div className="title-item">Cách thức thanh toán :</div>
+                        <div className="value-item">Thanh toán khi nhận hàng</div>
+                    </div>
+                    <div className="item">
+                        <div className="title-item">Cách thức giao hàng :</div>
+                        <select name="address-shipping" id="" className='select-option' onClick={(e) => setMethodShip(e.target.value)}>
+                            <option value={"Giao hàng tận nơi"}>Giao hàng tận nơi</option>
+                            <option value={"Nhận tại cửa hàng"}>Nhận tại cửa hàng</option>
+
+                        </select>
+
+                    </div>
+                </div>
+                <div className="wrapper-node">
+                    <input
+                        type="text"
+                        className="input-text-node"
+                        placeholder='Ghi chú...'
+                        name='note'
+                        value={customer.note}
+                        onChange={(e) => handleChange(e)}
                     />
                 </div>
             </div>
             <div className="order-product">
-                <ProductCheckout />
-                <ProductCheckout />
-                <ProductCheckout />
-                <ProductCheckout />
-                <ProductCheckout />
+                {cart.products.map(pro => (
+                    <ProductCheckout product={pro} key={uuidv4()} />
+                ))}
             </div>
             <div className="checkout-product">
                 <div className="checkout-product-right">
@@ -218,13 +351,13 @@ export default function Order() {
                             Thành tiền :
                         </div>
                         <div className="price-order">
-                            đ18.890.000
+                            {cart.total}đ
                         </div>
                     </div>
                 </div>
             </div>
             <div className="order-bottom">
-                <div className="btn-submit">
+                <div className="btn-submit" onClick={handleOrder}>
                     Đặt hàng
                 </div>
             </div>

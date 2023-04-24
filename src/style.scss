@@ -10,6 +10,7 @@ $themes: (
         textBold: #000,
         colorPink: #d83131,
         pageColor: orange,
+        
     ),
     dark: (textColor: whitesmoke,
         bg: #222,
@@ -75,5 +76,17 @@ $themes: (
         justify-content: center;
         flex-direction: column;
         align-items: center;
+    }
+}
+
+.admin-wrapper {
+    .container-admin {
+        display: flex;
+        .side-bar {
+            flex: 2;
+        }
+        .main {
+            flex: 8;
+        }
     }
 }
