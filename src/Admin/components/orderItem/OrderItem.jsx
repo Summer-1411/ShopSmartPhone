@@ -122,6 +122,7 @@ export default function OrderItem(
         <div className="row-orderItem">
             <div className="col-item-2">
                 <div className="username">{order.fullname}</div>
+                <div className="email-user">{order.email}</div>
                 <div className="email-user">{order.phone}</div>
                 <div className="address-user">{order.shipping_address}</div>
             </div>

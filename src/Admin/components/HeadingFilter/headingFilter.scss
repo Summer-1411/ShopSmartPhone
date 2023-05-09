@@ -1,0 +1,27 @@
+.filterItem-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+    .item-filter {
+        flex: 1;
+    }
+
+    .item-filter-img {
+        flex: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        .img-filter {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+
+        input {
+            display: none;
+        }
+    }
+}

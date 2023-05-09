@@ -40,6 +40,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { toastOption } from './constants';
 import UserAdmin from './Admin/pages/user/UserAdmin';
+import NewProduct from './Admin/pages/newProduct/NewProduct';
 
 
 function App() {
@@ -143,7 +144,7 @@ function App() {
         },
         {
           path: "new-product",
-          element: <h1>New Products</h1>
+          element: <NewProduct />
         },
         {
           path: "orders",

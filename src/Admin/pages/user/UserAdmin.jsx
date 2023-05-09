@@ -75,7 +75,7 @@ export default function UserAdmin() {
             <div className="userAdmin-heading">
                 <div className="heading-title">Danh sách người dùng</div>
                 <div className="user-deleted">
-                    Đã xoá (10)
+                    Đã xoá
                 </div>
             </div>
             <div className="userAdmin-body">

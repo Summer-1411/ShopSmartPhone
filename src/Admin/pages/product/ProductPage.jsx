@@ -6,6 +6,7 @@ import ProductItem from '../../components/productItem/ProductItem';
 import axios from 'axios';
 import { BASE_URL } from '../../../requestMethod';
 import { SUMMER_SHOP } from '../../../constants';
+import { Link } from 'react-router-dom';
 export default function ProductPage() {
     
     const [listProduct, setListProduct] = useState([])
@@ -58,8 +59,11 @@ export default function ProductPage() {
         <div className='productAdmin-wrapper'>
             <div className="productAdmin-heading">
                 <div className="heading-title">Danh sách sản phẩm</div>
+                <Link to="/2020606605/admin/new-product" className="add-product">
+                    Thêm sản phẩm
+                </Link>
                 <div className="user-deleted">
-                    Đã xoá (10)
+                    Đã xoá
                 </div>
             </div>
             <div className="productAdmin-body">

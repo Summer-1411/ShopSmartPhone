@@ -8,8 +8,8 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 const toastOption = {
     position: "top-right",
     autoClose: 3000,
-    pauseOnHover: true,
-    draggable: true,
+    pauseOnHover: false,
+    draggable: false,
     theme: 'light'
 }
 
@@ -128,6 +128,59 @@ const routesPurchasePage = [
     },
 ]
 
+const categorys = [
+    {
+        name: "Android",
+        id: 1
+    },
+    {
+        name: "iPhone (IOS)",
+        id: 2
+    },
+    {
+        name: "Khác",
+        id: 3
+    }
+]
+const producers = [
+    {
+        id: 1,
+        name: "iPhone"
+    },
+    {
+        id: 2,
+        name: "SAMSUNG"
+    },
+    {
+        id: 3,
+        name: "OPPO"
+    },
+    {
+        id: 4,
+        name: "XIAOMI"
+    },
+    {
+        id: 5,
+        name: "VIVO"
+    },
+    {
+        id: 6,
+        name: "Realme"
+    },
+    {
+        id: 7,
+        name: "NOKIA"
+    },
+    {
+        id: 8,
+        name: "iTel"
+    },
+    {
+        id: 9,
+        name: "Masstel"
+    },
+]
+
 const SUMMER_SHOP = "summerShop"
 export {
     genders,
@@ -136,6 +189,8 @@ export {
     SUMMER_SHOP,
     sideBarAdmin,
     routeOrderAdmin,
-    toastOption
+    toastOption,
+    categorys,
+    producers
 }
 

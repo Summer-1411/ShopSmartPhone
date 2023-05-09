@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
-
-import {store, persistor} from './redux/store';
+import ProductFilterProvider from './context/productFilterContext';
+import { store, persistor } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,8 +15,10 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <App />
-        <ToastContainer />
+        <ProductFilterProvider>
+          <App />
+          <ToastContainer />
+        </ProductFilterProvider>
       </PersistGate>
     </Provider>
   </React.StrictMode>

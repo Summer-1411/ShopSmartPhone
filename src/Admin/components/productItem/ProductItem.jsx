@@ -1,6 +1,7 @@
 
 import './productItem.scss'
 import {  parseDate } from '../../../utils/formatDate';
+import { numberWithCommas } from '../../../utils/formatMoney';
 export default function ProductItem({view, remove, undo, edit,product}) {
     //console.log(user);
     return (
@@ -19,7 +20,7 @@ export default function ProductItem({view, remove, undo, edit,product}) {
                 {product.producer}
             </div>
             <div className="col-item">
-                {product.priceRange}
+                {numberWithCommas(product.priceRange)}
             </div>
             <div className="col-item">
                 {parseDate(product.createAt)}

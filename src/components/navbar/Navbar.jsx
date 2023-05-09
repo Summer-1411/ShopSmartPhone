@@ -6,22 +6,38 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { IMAGE_DEFAULT, IMAGE_LINK } from "../../requestMethod";
+import { BASE_URL, IMAGE_DEFAULT, IMAGE_LINK } from "../../requestMethod";
+import axios from "axios";
+import { ProductFilterContext } from "../../context/productFilterContext";
 
 
 export default function NavBar() {
+    const { productFilter, setProductFilter } = useContext(ProductFilterContext)
     const currentUser = useSelector((state) => state.user.currentUser);
     const cart = useSelector((state) => state.cart)
     //console.log({cart});
     const [openOption, setOpenOption] = useState(false)
     const [category, setCategory] = useState("All category");
-    const handleClickOption = (value) => {
-        setCategory(value);
+    const handleClickOption = (category) => {
+        setCategory(category.name);
+        setProductFilter(prev => ({category: category.id, producer: null}))
         setOpenOption(false);
     }
+    const [listCategory, setListCategory] = useState([])
+    useEffect(() => {
+        const getCategory = async () => {
+            try {
+                const res = await axios.get(`${BASE_URL}/category`)
+                setListCategory(res.data.category)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getCategory()
+    }, [])
     return (
         <div className="navbar">
             <div className="navbar-container">
@@ -35,22 +51,19 @@ export default function NavBar() {
                     <div className="search">
                         <div className="selection">
                             <div onClick={() => { openOption ? setOpenOption(false) : setOpenOption(true) }} className="selection-title">
-                                {category} <KeyboardArrowDownIcon className={openOption ? "icon-category open-option" : "icon-category"} />
+                                {productFilter.category ? category : "Tất cả"} <KeyboardArrowDownIcon className={openOption ? "icon-category open-option" : "icon-category"} />
 
                             </div>
                             <div className={openOption ? "option open" : "option"}>
-                                <div className="option-item" onClick={() => handleClickOption("All Category")}>
-                                    All Category
+
+                                <div className="option-item" onClick={() => handleClickOption({name: "All Category", id: null})}>
+                                    Tất cả
                                 </div>
-                                <div className="option-item" onClick={() => handleClickOption("Android")}>
-                                    Android
-                                </div>
-                                <div className="option-item" onClick={() => handleClickOption("iPhone (IOS)")}>
-                                    iPhone (IOS)
-                                </div>
-                                <div className="option-item" onClick={() => handleClickOption("Khac")}>
-                                    Khac
-                                </div>
+                                {listCategory.map((category) => (
+                                    <div key={category.id} className="option-item" onClick={() => handleClickOption(category)}>
+                                        {category.name}
+                                    </div>
+                                ))}
                             </div>
                         </div>
                         <SearchOutlinedIcon />
@@ -65,7 +78,7 @@ export default function NavBar() {
                                 {cart.count}
                             </div>
                         )}
-                        
+
                     </Link>
                     <EmailOutlinedIcon />
                     <NotificationsOutlinedIcon />
@@ -73,7 +86,7 @@ export default function NavBar() {
                         <img src={currentUser.avatar ? `${IMAGE_LINK}/${currentUser.avatar}` : `${IMAGE_DEFAULT}`} alt="" />
                         <span>{currentUser.username}</span>
                     </Link>
-                    
+
                 </div>
 
             </div>
