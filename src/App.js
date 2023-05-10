@@ -44,6 +44,11 @@ import NewProduct from './Admin/pages/newProduct/NewProduct';
 import ListProduct from './Admin/components/listProduct/ListProduct';
 import CountProductDeletedProvider from './context/countProductDeleted';
 
+import ListUser from './Admin/components/listUser/ListUser';
+import ListProductDeleted from './Admin/components/listProduct/ListProductDeleted';
+import ListUserDeleted from './Admin/components/listUser/ListUserDeleted';
+import CountUserDeletedProvider from './context/countUserDeleted';
+
 
 function App() {
   const currentUser = useSelector((state) => state.user.currentUser);
@@ -150,7 +155,21 @@ function App() {
             },
             {
               path: "deleted-product",
-              element: <h1>Deleted Product</h1>
+              element: <ListProductDeleted />
+            }
+          ]
+        },
+        {
+          path: "users",
+          element: <CountUserDeletedProvider><UserAdmin /></CountUserDeletedProvider>,
+          children: [
+            {
+              path: "",
+              element: <ListUser />
+            },
+            {
+              path: "deleted-user",
+              element: <ListUserDeleted />
             }
           ]
         },
@@ -183,11 +202,7 @@ function App() {
               element: <OrderCancel />
             }
           ]
-        },
-        {
-          path: "users",
-          element: <UserAdmin />
-        },
+        }
       ]
     },
     {

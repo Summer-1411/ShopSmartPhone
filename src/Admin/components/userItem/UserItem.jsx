@@ -2,8 +2,14 @@ import { IMAGE_DEFAULT, IMAGE_LINK } from '../../../requestMethod';
 import {  parseDate } from '../../../utils/formatDate';
 import './userItem.scss'
 
-export default function UserItem({view, remove, undo, user}) {
+export default function UserItem({view, remove, undo, user, handleDeleteUserItem, handleCancelDeleteUserItem}) {
     //console.log(user);
+    const handleClickDeleteUser = () => {
+        handleDeleteUserItem(user.id)
+    }
+    const handleClickRestoreUser = () => {
+        handleCancelDeleteUserItem(user.id)
+    }
     return (
         <div className='row-userItem'>
             <div className="col-item">
@@ -27,8 +33,8 @@ export default function UserItem({view, remove, undo, user}) {
             </div>
             <div className="col-item col-action-admin">
                 {view && <div className="btn-action btn-view">Xem</div>}
-                {remove && <div className="btn-action btn-remove">Xoá</div>}
-                {undo && <div className="btn-action btn-undo">Khôi phục</div>}
+                {remove && <div className="btn-action btn-remove" onClick={handleClickDeleteUser}>Xoá</div>}
+                {undo && <div className="btn-action btn-undo" onClick={handleClickRestoreUser}>Khôi phục</div>}
             </div>
         </div>
     )

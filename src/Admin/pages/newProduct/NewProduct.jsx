@@ -12,7 +12,6 @@ export default function NewProduct() {
     const [listCategory, setListCategory] = useState([])
     const [listProducer, setListProducer] = useState([])
     const [listFilter, setListFilter] = useState([])
-    const [idNewProduct, setIdNewProduct] = useState()
     const [newProduct, setNewProduct] = useState({
         name: "",
         description: "",
@@ -26,8 +25,8 @@ export default function NewProduct() {
     const [filter, setFilter] = useState({
         color: "",
         size: "",
-        quantity: 1,
-        price: 0
+        quantity: undefined,
+        price: undefined
     })
     const [file, setFile] = useState(null)
     const [avatar, setAvatar] = useState(null)

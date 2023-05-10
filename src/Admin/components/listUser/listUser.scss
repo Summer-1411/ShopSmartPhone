@@ -1,0 +1,71 @@
+.listUser-admin-wrapper {
+    .userAdmin-body {
+        background-color: #fff;
+        box-shadow: 0 3px 7px 0 rgba(0, 0, 0, .13), 0 1px 2px 0 rgba(0, 0, 0, .11);
+
+
+        .head-table-userAdmin {
+            padding: 16px 5px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #ccc;
+            border-top: 1px solid #ccc;
+
+            .col-item {
+                flex: 1;
+                text-align: center;
+                padding: 10px;
+                font-weight: bold;
+                
+            }
+            
+            .col-item-2 {
+                flex: 2;
+                padding: 10px;
+                font-weight: bold;
+            }
+        }
+        .body-table-userAdmin {
+            margin-bottom: 30px;
+        }
+
+        
+    }
+    .userAdmin-bottom{
+        display: flex;
+        margin-top: 20px;
+        justify-content: center;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 10px;
+        z-index: 99;
+        .userAdmin-pages {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .page-list {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            cursor: pointer;
+
+            .page-item {
+                padding: 6px 10px;
+                font-weight: bold;
+                
+                &.active {
+                    background-color: #17a2b8;
+                    color: white;
+                    &:hover{
+                        color: inherit;
+                    }
+                }
+                &:hover {
+                    color: #17a2b8;
+                }
+            }
+        }
+    }
+}

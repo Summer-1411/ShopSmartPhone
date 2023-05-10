@@ -11,6 +11,5 @@ const CountProductDeletedProvider = ({ children }) => {
         </countProductDeletedContext.Provider>
     )
 }
-
 export {countProductDeletedContext}
 export default CountProductDeletedProvider

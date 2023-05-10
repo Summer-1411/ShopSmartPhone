@@ -3,10 +3,13 @@ import './productItem.scss'
 import {  parseDate } from '../../../utils/formatDate';
 import { numberWithCommas } from '../../../utils/formatMoney';
 import { IMAGE_LINK } from '../../../requestMethod';
-export default function ProductItem({view, remove, undo,product, handleDeleteProductItem}) {
+export default function ProductItem({view, remove, undo,product, handleDeleteProductItem, handleCancelDeleteProductItem}) {
     //console.log(user);
     const handleClickDelette = () => {
         handleDeleteProductItem(product.id)
+    }
+    const handleClickRestore = () => {
+        handleCancelDeleteProductItem(product.id)
     }
     return (
         <div className='row-userItem'>
@@ -32,7 +35,7 @@ export default function ProductItem({view, remove, undo,product, handleDeletePro
             <div className="col-item-2 col-action-admin">
                 {view && <div className="btn-action btn-view">Xem</div>}
                 {remove && <div className="btn-action btn-remove" onClick={handleClickDelette}>Xoá</div>}
-                {undo && <div className="btn-action btn-undo">Khôi phục</div>}
+                {undo && <div className="btn-action btn-undo" onClick={handleClickRestore}>Khôi phục</div>}
             {/* {edit && <div className="btn-action btn-edit">Sửa</div>} */}
             </div>
         </div>

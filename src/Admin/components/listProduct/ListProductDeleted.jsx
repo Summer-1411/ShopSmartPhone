@@ -2,22 +2,22 @@
 import React, { useContext, useEffect, useState } from 'react'
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
-import ProductItem from '../../components/productItem/ProductItem';
+import ProductItem from '../productItem/ProductItem';
 import axios from 'axios';
 import { BASE_URL } from '../../../requestMethod';
 import { SUMMER_SHOP } from '../../../constants';
 import { countProductDeletedContext } from '../../../context/countProductDeleted';
 import './listProduct.scss'
-export default function ListProduct() {
+export default function ListProductDeleted() {
     const { setCountDeleted } = useContext(countProductDeletedContext)
-    const [listProduct, setListProduct] = useState([])
+    const [listProductDeleted, setListProductDeleted] = useState([])
     const [pages, setPages] = useState(1);
     const [currentPage, setCurrentPage] = useState(1)
     
     useEffect(() => {
         const getNumberPage = async () => {
             try {
-                const res = await axios.get(`${BASE_URL}/product/page`)
+                const res = await axios.get(`${BASE_URL}/product/pageDeleted`)
                 setPages(res.data[0].numPages)
             } catch (error) {
                 console.log(error);
@@ -27,10 +27,10 @@ export default function ListProduct() {
     }, [])
     useEffect(() => {
         const getProducts = async () => {
-            const res = await axios.get(`${BASE_URL}/product/byAdmin?page=${currentPage}`,{
+            const res = await axios.get(`${BASE_URL}/product/deleted-byAdmin?page=${currentPage}`,{
                 headers: { Authorization: `Bearer ${localStorage[SUMMER_SHOP]}` }
             })
-            setListProduct(res.data.products)
+            setListProductDeleted(res.data.products)
         }
         getProducts()
     }, [currentPage])
@@ -57,10 +57,10 @@ export default function ListProduct() {
             setCurrentPage(value)
         }
     }
-    const handleDeleteProductItem = async (id) => {
-        setListProduct(prev => prev.filter((pro) => pro.id !== id))
-        setCountDeleted(prev => prev + 1)
-        const res = await axios.put(`${BASE_URL}/product/delete/${id}`,{},
+    const handleCancelDeleteProductItem = async (id) => {
+        setListProductDeleted(prev => prev.filter((pro) => pro.id !== id))
+        setCountDeleted(prev => prev - 1)
+        const res = await axios.put(`${BASE_URL}/product/cancel-delete/${id}`,{},
         {
             headers: { Authorization: `Bearer ${localStorage[SUMMER_SHOP]}` }
         })
@@ -68,7 +68,7 @@ export default function ListProduct() {
     }
     return (
         <div className='listProduct-admin-wrapper'>
-            <h2>Danh sách sản phẩm</h2>
+            <h2>Danh sách sản phẩm đã xoá</h2>
             <div className="productAdmin-body">
                 <div className="head-table-productAdmin">
                     <div className="col-item">
@@ -94,8 +94,8 @@ export default function ListProduct() {
                     </div>
                 </div>
                 <div className="body-table-productAdmin">
-                    {listProduct.map((pro) => (
-                        <ProductItem key={pro.id} view remove edit product={pro} handleDeleteProductItem={handleDeleteProductItem} />
+                    {listProductDeleted.map((pro) => (
+                        <ProductItem key={pro.id} view undo product={pro} handleCancelDeleteProductItem={handleCancelDeleteProductItem}/>
                     ))}
                 </div>
             </div>
