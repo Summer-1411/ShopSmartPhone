@@ -87,7 +87,6 @@ export default function PurchaseProduct({ bill,cancelOrder }) {
                 </div>
             </div>
             {opnenCancellation &&
-
                 <div className="wrapper-cancel" onClick={() => setOpnenCancellation(false)}>
                     <div className="cancel-container" onClick={(e) => { e.stopPropagation() }} >
                         <div className="cancel-heading">

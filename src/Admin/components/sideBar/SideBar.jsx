@@ -1,10 +1,16 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { sideBarAdmin } from '../../../constants'
 import './sideBar.scss'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function SideBar() {
-    const [currentPage, setCurrentPage] = useState(1)
+    const location = useLocation().pathname;
+    const [currentPage, setCurrentPage] = useState("dashboard")
+
+    useEffect(() => {
+        setCurrentPage(location.split("/")[3] || "")
+    },[location])
+    //console.log(location.split("/")[3]);
     return (
         <div className='sideBar-container'>
             <div className="sideBar-container-heading">
@@ -15,8 +21,8 @@ export default function SideBar() {
                     <Link
                         to={nav.path}
                         key={nav.id}
-                        className={nav.id === currentPage ? "navlink-item active" : "navlink-item"}
-                        onClick={() => setCurrentPage(nav.id)}
+                        className={nav.path === currentPage ? "navlink-item active" : "navlink-item"}
+                        onClick={() => setCurrentPage(nav.path)}
                     >
                         <nav.icon /> {nav.title}
                     </Link>

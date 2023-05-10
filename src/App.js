@@ -41,6 +41,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toastOption } from './constants';
 import UserAdmin from './Admin/pages/user/UserAdmin';
 import NewProduct from './Admin/pages/newProduct/NewProduct';
+import ListProduct from './Admin/components/listProduct/ListProduct';
+import CountProductDeletedProvider from './context/countProductDeleted';
 
 
 function App() {
@@ -136,15 +138,25 @@ function App() {
         },
         {
           path: "products",
-          element: <ProductPage />
+          element: <CountProductDeletedProvider><ProductPage /></CountProductDeletedProvider> ,
+          children: [
+            {
+              path: "",
+              element: <ListProduct />
+            },
+            {
+              path: "new-product",
+              element: <NewProduct />
+            },
+            {
+              path: "deleted-product",
+              element: <h1>Deleted Product</h1>
+            }
+          ]
         },
         {
           path: "product-details",
           element: <h1>Product Details</h1>
-        },
-        {
-          path: "new-product",
-          element: <NewProduct />
         },
         {
           path: "orders",

@@ -8,7 +8,7 @@ import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArro
 import './userAdmin.scss'
 import UserItem from '../../components/userItem/UserItem';
 export default function UserAdmin() {
-    
+
     // useEffect(() => {
     //     const getAllUser = async () => {
     //         try {
@@ -39,7 +39,7 @@ export default function UserAdmin() {
     }, [])
     useEffect(() => {
         const getUsers = async () => {
-            const res = await axios.get(`${BASE_URL}/user/alluser?page=${currentPage}`,{
+            const res = await axios.get(`${BASE_URL}/user/alluser?page=${currentPage}`, {
                 headers: { Authorization: `Bearer ${localStorage[SUMMER_SHOP]}` }
             })
             setListUser(res.data.users)
@@ -78,59 +78,61 @@ export default function UserAdmin() {
                     Đã xoá
                 </div>
             </div>
-            <div className="userAdmin-body">
-                <div className="head-table-userAdmin">
-                    <div className="col-item">
-                        Id
+            <>
+                <div className="userAdmin-body">
+                    <div className="head-table-userAdmin">
+                        <div className="col-item">
+                            Id
+                        </div>
+                        <div className="col-item-2">
+                            Tên người dùng
+                        </div>
+                        <div className="col-item-2">
+                            Email
+                        </div>
+                        <div className="col-item">
+                            Giới tính
+                        </div>
+                        <div className="col-item">
+                            Ngày sinh
+                        </div>
+                        <div className="col-item">
+                            Ngày đăng ký
+                        </div>
+                        <div className="col-item">
+                            Thao tác
+                        </div>
                     </div>
-                    <div className="col-item-2">
-                        Tên người dùng
-                    </div>
-                    <div className="col-item-2">
-                        Email
-                    </div>
-                    <div className="col-item">
-                        Giới tính
-                    </div>
-                    <div className="col-item">
-                        Ngày sinh
-                    </div>
-                    <div className="col-item">
-                        Ngày đăng ký
-                    </div>
-                    <div className="col-item">
-                        Thao tác
-                    </div>
-                </div>
-                <div className="body-table-userAdmin">
-                    {listUser.map((user) => (
-                        <UserItem key={user.id} remove view user={user} />
-                    ))}
-                    
-                </div>
-            </div>
-            <div className="userAdmin-bottom">
-                <div className="userAdmin-pages">
-                    <div className="btn btn-prev-page" onClick={() => handleChangePage("prev")}>
-                        <KeyboardDoubleArrowLeftIcon />
-                    </div>
-                    <div className="page-list">
-                        {arr.map((page, index) => (
-                            <div
-                                key={index}
-                                className={page === currentPage ? "page-item active" : "page-item"}
-                                onClick={() => handleChangePage(page)}
-                            >
-                                {page}
-                            </div>
+                    <div className="body-table-userAdmin">
+                        {listUser.map((user) => (
+                            <UserItem key={user.id} remove view user={user} />
                         ))}
-                        
-                    </div>
-                    <div className="btn btn-next-page" onClick={() => handleChangePage("next")}>
-                        <KeyboardDoubleArrowRightIcon />
+
                     </div>
                 </div>
-            </div>
+                <div className="userAdmin-bottom">
+                    <div className="userAdmin-pages">
+                        <div className="btn btn-prev-page" onClick={() => handleChangePage("prev")}>
+                            <KeyboardDoubleArrowLeftIcon />
+                        </div>
+                        <div className="page-list">
+                            {arr.map((page, index) => (
+                                <div
+                                    key={index}
+                                    className={page === currentPage ? "page-item active" : "page-item"}
+                                    onClick={() => handleChangePage(page)}
+                                >
+                                    {page}
+                                </div>
+                            ))}
+
+                        </div>
+                        <div className="btn btn-next-page" onClick={() => handleChangePage("next")}>
+                            <KeyboardDoubleArrowRightIcon />
+                        </div>
+                    </div>
+                </div>
+            </>
         </div>
     )
 }
