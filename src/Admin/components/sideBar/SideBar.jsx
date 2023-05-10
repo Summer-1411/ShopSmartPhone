@@ -1,15 +1,26 @@
 import { Link, useLocation } from 'react-router-dom'
-import { sideBarAdmin } from '../../../constants'
+import { SUMMER_SHOP, sideBarAdmin, toastOption } from '../../../constants'
 import './sideBar.scss'
 import { useEffect, useState } from 'react'
-
+import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../../redux/userRedux';
+import { clearCart } from '../../../redux/cartRedux';
+import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 export default function SideBar() {
+    const dispatch = useDispatch()
     const location = useLocation().pathname;
     const [currentPage, setCurrentPage] = useState("dashboard")
 
     useEffect(() => {
         setCurrentPage(location.split("/")[3] || "")
-    },[location])
+    }, [location])
+    const handleLogout = () => {
+        toast.info("Bạn đã đăng xuất thành công !", toastOption)
+        dispatch(logout());
+        dispatch(clearCart());
+        localStorage.removeItem(SUMMER_SHOP)
+    }
     //console.log(location.split("/")[3]);
     return (
         <div className='sideBar-container'>
@@ -27,6 +38,12 @@ export default function SideBar() {
                         <nav.icon /> {nav.title}
                     </Link>
                 ))}
+                <div
+                    className="navlink-item"
+                    onClick={handleLogout}
+                >
+                    <ExitToAppOutlinedIcon /> Đăng xuất
+                </div>
             </div>
         </div>
     )
