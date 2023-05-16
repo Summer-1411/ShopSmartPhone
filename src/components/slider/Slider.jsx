@@ -1,30 +1,40 @@
 import { useEffect, useRef } from 'react'
 import './slider.scss'
 
+import img1 from "../../img/slide1.png"
+import img2 from "../../img/slide2.png"
+import img3 from "../../img/slide3.png"
+import img4 from "../../img/slide4.png"
+import img5 from "../../img/slide5.png"
+import img6 from "../../img/slide6.png"
+import img7 from "../../img/slide7.png"
+import img8 from "../../img/slide8.png"
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 const listSlider = [
     {
-        src: "https://photo-zmp3.zmdcdn.me/banner/1/2/b/0/12b076c5938acd263e244fcf9ae26fc5.jpg"
+        src: img1,
     },
     {
-        src: "https://photo-zmp3.zmdcdn.me/banner/f/9/7/1/f971cf9140149e7dffd3476d2987bd05.jpg"
+        src: img2,
     },
     {
-        src: "https://photo-zmp3.zmdcdn.me/banner/b/6/2/6/b626fb9a54285751c7f35319c7ecb105.jpg"
+        src: img3,
     },
     {
-        src: "https://photo-zmp3.zmdcdn.me/banner/7/3/a/7/73a7e372d21bf6fb18431ed872ad13df.jpg"
+        src: img4,
     },
     {
-        src: "https://photo-zmp3.zmdcdn.me/banner/a/c/a/1/aca1550cf30f71eacc4a65ef4eae97e7.jpg"
+        src: img5,
     },
     {
-        src: "https://photo-zmp3.zmdcdn.me/banner/d/8/a/d/d8ad63089ab5a6925bec96bedf6da9c1.jpg"
+        src: img6,
     },
     {
-        src: "https://photo-zmp3.zmdcdn.me/banner/7/3/a/7/73a7e372d21bf6fb18431ed872ad13df.jpg"
+        src: img7,
     },
     {
-        src: "https://photo-zmp3.zmdcdn.me/banner/a/c/a/1/aca1550cf30f71eacc4a65ef4eae97e7.jpg"
+        src: img8,
     }
 ]
 export default function Slider() {
@@ -72,12 +82,14 @@ export default function Slider() {
     return (
         <div>
             <div className="discover-slider-wrap">
-                <div className="discover-btn discover-btn-prev" onClick={() => handleSlider(-1)}>
+                {/* <div className="discover-btn discover-btn-prev" onClick={() => handleSlider(-1)}>
                     <i className="bi bi-chevron-left"></i>
-                </div>
-                <div  className="discover-btn discover-btn-next" onClick={() => handleSlider(1)}>
+                </div> */}
+                <ArrowBackIosNewIcon className="discover-btn discover-btn-prev" onClick={() => handleSlider(-1)}/>
+                <ArrowForwardIosIcon className="discover-btn discover-btn-next" onClick={() => handleSlider(1)}/>
+                {/* <div  className="discover-btn discover-btn-next" onClick={() => handleSlider(1)}>
                     <i className="bi bi-chevron-right"></i>
-                </div>
+                </div> */}
                 <div className="discover-slider-main">
                     {listSlider.map((value, key) => (
                         <div  key={key} className= {`discover-slider-item index${key}`}>
