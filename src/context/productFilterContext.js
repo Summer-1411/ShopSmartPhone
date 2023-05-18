@@ -8,7 +8,7 @@ const ProductFilterProvider = ({ children }) => {
         category: null,
         producer: null,
     })
-    console.log(productFilter);
+    //console.log(productFilter);
     return (
         <ProductFilterContext.Provider value={{productFilter, setProductFilter}}>
             {children}

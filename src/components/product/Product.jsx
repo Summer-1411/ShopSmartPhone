@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { numberWithCommas } from '../../utils/formatMoney';
 import { IMAGE_LINK } from '../../requestMethod';
 export default function Product({ product }) {
-    console.log(product.img);
+    //console.log(product.img);
     return (
         <Link to={`/product/${product.id}`} className="product-item">
             <div className="wrapper-img">

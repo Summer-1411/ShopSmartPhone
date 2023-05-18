@@ -82,7 +82,7 @@ export default function Register() {
                     </div>
                     <button onClick={handleRegister}>Đăng ký</button>
                     <div className="outer-link">
-                        Bạn đã có tài khoản? <Link to="/login">Đăng nhập</Link> 
+                        Bạn đã có tài khoản? <Link className='link-item' to="/login">Đăng nhập</Link> 
                     </div>
                 </form>
             </div>

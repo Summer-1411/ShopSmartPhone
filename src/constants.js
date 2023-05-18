@@ -65,7 +65,7 @@ const sideBarAdmin = [
     {
         id: 3,
         icon: AccountCircleOutlinedIcon,
-        title: "Người dùng",
+        title: "Khách hàng",
         path: "users"
     },
     {

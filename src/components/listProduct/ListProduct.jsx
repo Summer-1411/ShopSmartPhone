@@ -27,17 +27,17 @@ export default function ListProduct() {
         const getProducts = async () => {
             try {
                 if (productFilter.category) {
-                    console.log("category");
+                    //console.log("category");
                     const res = await axios.get(`${BASE_URL}/product?page=${currentPage}&&category=${productFilter.category}`)
                     //console.log("product :", res.data.products);
                     setListProduct(res.data.products)
                 } else if (productFilter.producer) {
-                    console.log("producer");
+                    //console.log("producer");
                     const res = await axios.get(`${BASE_URL}/product?page=${currentPage}&&producer=${productFilter.producer}`)
                     //console.log("product :", res.data.products);
                     setListProduct(res.data.products)
                 }else {
-                    console.log("all");
+                    //console.log("all");
                     const res = await axios.get(`${BASE_URL}/product?page=${currentPage}`)
                     //console.log("product :", res.data.products);
                     setListProduct(res.data.products)

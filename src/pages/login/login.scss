@@ -54,6 +54,7 @@
                         padding: 10px;
                         border: none;
                         outline: none;
+                        font-size: 16px;
                         background-color: transparent;
                     }
                     span{
@@ -78,11 +79,14 @@
             }
             .outer-link {
                 display: block;
-                font-size: 14px;
+                font-size: 16px;
                 font-weight: 500;
                 color: #081828;
                 margin-top: 30px;
                 text-align: center;
+                .link-item {
+                    color: inherit;
+                }
             }
         }
     }

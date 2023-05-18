@@ -95,7 +95,7 @@ export default function Login() {
 
                     <button onClick={handleLogin}>Đăng nhập</button>
                     <div className="outer-link">
-                        Bạn không có tài khoản? <Link to="/register">Đăng ký</Link>
+                        Bạn không có tài khoản? <Link className='link-item' to="/register">Đăng ký</Link>
                     </div>
                 </form>
             </div>
