@@ -12,6 +12,10 @@
         padding: 15px 20px;
         
         box-shadow: 0 3px 7px 0 rgba(0, 0, 0, .13), 0 1px 2px 0 rgba(0, 0, 0, .11);
+        .link-item {
+            color: initial;
+            text-decoration: none;
+        }
         .heading-title {
             font-size: 18px;
             font-weight: bold;
