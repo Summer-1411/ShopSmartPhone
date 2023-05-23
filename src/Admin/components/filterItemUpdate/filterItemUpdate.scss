@@ -1,0 +1,57 @@
+.filterItemUpdate-product-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 25px 0;
+    border-top: 1px solid black;
+
+    .item-filter {
+        flex: 1;
+        display: flex;
+        gap: 10px;
+
+        .btn {
+            padding: 5px 10px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            color: white;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .btn-save-filter {
+            background-color: #17a2b8;
+            
+        }
+        .btn-delete-filter {
+            background-color: #dc3545;
+        }
+    }
+
+    .item-filter-img {
+        flex: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        .img-filter {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+
+        }
+
+        input {
+            display: none;
+        }
+    }
+
+}

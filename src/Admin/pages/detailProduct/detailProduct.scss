@@ -1,0 +1,167 @@
+.detailProduct-wrapper {
+    padding: 30px;
+
+    .detailProduct-heading {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .detailProduct-container {
+        margin-top: 30px;
+        display: flex;
+        align-items: center;
+        gap: 30px;
+
+        .left {
+            flex: 7;
+
+            .row-item-infor {
+                display: flex;
+                align-items: center;
+                margin-bottom: 10px;
+
+                .row-title {
+                    flex: 2;
+                }
+
+                .row-value {
+                    flex: 8;
+
+                    textarea,
+                    input.text-input {
+                        padding: 10px;
+                        width: 100%;
+                        font-size: 16px;
+                    }
+
+                    .select-element {
+                        padding: 8px 12px;
+                        border-radius: 4px;
+                        outline: none;
+                    }
+
+                    input {
+                        padding: 10px;
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+
+        .right {
+            flex: 3;
+
+            .img-product {
+                width: 300px;
+                height: 300px;
+                object-fit: cover;
+            }
+
+            .input-file {
+                display: none;
+            }
+
+            label {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-top: 20px;
+
+                .btn-select-img {
+                    background-color: #28a745;
+                    color: white;
+                    padding: 5px 20px;
+                    font-size: 16px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    .newFilter-product {
+        margin-top: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid black;
+
+        .newFilter-product-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+
+            .item-filter {
+                flex: 1;
+
+                input {
+                    width: 100%;
+                    padding: 10px;
+                    font-size: 16px;
+                }
+
+                .btn {
+                    padding: 10px;
+                    cursor: pointer;
+                }
+
+                .btn-add-filter {
+                    background-color: #0069d9;
+                    color: white;
+                    margin-top: 10px;
+                    padding: 5px 15px;
+                    font-size: 16px;
+                    border-radius: 4px;
+                    border: none;
+                    outline: none;
+                    cursor: pointer;
+                }
+            }
+
+            .item-filter-img {
+                flex: 2;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+
+                .btn-select-img {
+                    background-color: #28a745;
+                    color: white;
+                    margin-top: 10px;
+                    padding: 4px 12px;
+                    font-size: 16px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                }
+
+                .img-filter {
+                    width: 100px;
+                    height: 100px;
+                    object-fit: cover;
+                }
+
+                input {
+                    display: none;
+                }
+            }
+        }
+    }
+    .btn {
+        padding: 5px 15px;
+        font-size: 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        color: white;
+        margin-top: 20px;
+    }
+    .btn-updateProduct {
+        background-color: #007bff;
+        margin-right: 20px;
+        border: none;
+        outline: none;
+    }
+    .btn-exit {
+        background-color: #ffc107;
+        color: black;
+        text-decoration: none;
+    }
+}

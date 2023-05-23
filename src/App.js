@@ -36,9 +36,9 @@ import ToShipOrder from './pages/toShipOrder/ToShipOrder';
 import PendingOrder from './pages/pendingOrder/PendingOrder';
 import CancelledOrder from './pages/cancelledOrder/CancelledOrder';
 
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { toastOption } from './constants';
+// import { toastOption } from './constants';
 import UserAdmin from './Admin/pages/user/UserAdmin';
 import NewProduct from './Admin/pages/newProduct/NewProduct';
 import ListProduct from './Admin/components/listProduct/ListProduct';
@@ -48,8 +48,7 @@ import ListUser from './Admin/components/listUser/ListUser';
 import ListProductDeleted from './Admin/components/listProduct/ListProductDeleted';
 import ListUserDeleted from './Admin/components/listUser/ListUserDeleted';
 import CountUserDeletedProvider from './context/countUserDeleted';
-
-
+import DetailProduct from './Admin/pages/detailProduct/DetailProduct';
 function App() {
   const currentUser = useSelector((state) => state.user.currentUser);
 
@@ -63,7 +62,7 @@ function App() {
     if (!currentUser.isAdmin) {
       return <Navigate to="/" />
     }
-    toast.success("Bạn đã đăng nhập với vai trò Admin", toastOption)
+    // toast.success("Bạn đã đăng nhập với vai trò Admin", toastOption)
     return children
   }
 
@@ -156,6 +155,10 @@ function App() {
             {
               path: "deleted-product",
               element: <ListProductDeleted />
+            },
+            {
+              path: "detail-product/:id",
+              element: <DetailProduct />
             }
           ]
         },
@@ -172,10 +175,6 @@ function App() {
               element: <ListUserDeleted />
             }
           ]
-        },
-        {
-          path: "product-details",
-          element: <h1>Product Details</h1>
         },
         {
           path: "orders",

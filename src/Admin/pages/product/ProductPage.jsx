@@ -22,11 +22,11 @@ export default function ProductPage() {
     return (
         <div className='productAdmin-wrapper'>
             <div className="productAdmin-heading">
-                <Link to="" className="heading-title">Danh sách sản phẩm</Link>
-                <Link to="new-product" className="add-product">
+                <Link to="" className="link-item heading-title">Danh sách sản phẩm</Link>
+                <Link to="new-product" className="link-item add-product">
                     Thêm sản phẩm
                 </Link>
-                <Link to="deleted-product" className="user-deleted">
+                <Link to="deleted-product" className="link-item user-deleted">
                     Đã xoá {`(${countDeleted})`}
                 </Link>
             </div>
