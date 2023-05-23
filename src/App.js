@@ -1,4 +1,3 @@
-
 import './style.scss';
 import {
   createBrowserRouter,
@@ -49,6 +48,8 @@ import ListProductDeleted from './Admin/components/listProduct/ListProductDelete
 import ListUserDeleted from './Admin/components/listUser/ListUserDeleted';
 import CountUserDeletedProvider from './context/countUserDeleted';
 import DetailProduct from './Admin/pages/detailProduct/DetailProduct';
+import UserDetail from './Admin/pages/userDetail/UserDetail';
+
 function App() {
   const currentUser = useSelector((state) => state.user.currentUser);
 
@@ -80,7 +81,7 @@ function App() {
       children: [
         {
           path: "/",
-          element: <Home />
+element: <Home />
         },
         {
           path: "/product/:id",
@@ -173,6 +174,10 @@ function App() {
             {
               path: "deleted-user",
               element: <ListUserDeleted />
+            },
+            {
+              path: "detail-user/:id",
+              element: <UserDetail />
             }
           ]
         },
@@ -197,7 +202,7 @@ function App() {
               element: <OrderRefuse />
             },
             {
-              path: "cancel",
+path: "cancel",
               element: <OrderCancel />
             }
           ]

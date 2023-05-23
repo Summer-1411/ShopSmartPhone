@@ -1,14 +1,19 @@
-
 import './productItem.scss'
 import {  parseDate } from '../../../utils/formatDate';
 import { numberWithCommas } from '../../../utils/formatMoney';
 import { IMAGE_LINK } from '../../../requestMethod';
-export default function ProductItem({view, remove, undo,product, handleDeleteProductItem, handleCancelDeleteProductItem}) {
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { toastOption } from '../../../constants'
+export default function ProductItem({view, remove, edit, undo,product, handleDeleteProductItem, handleCancelDeleteProductItem}) {
     //console.log(user);
     const handleClickDelette = () => {
+        toast.success("Xoá sản phẩm thành công", toastOption);
         handleDeleteProductItem(product.id)
     }
     const handleClickRestore = () => {
+        toast.success("Khôi phục sản phẩm thành công", toastOption);
         handleCancelDeleteProductItem(product.id)
     }
     return (
@@ -33,10 +38,10 @@ export default function ProductItem({view, remove, undo,product, handleDeletePro
                 {parseDate(product.createAt)}
             </div>
             <div className="col-item-2 col-action-admin">
-                {view && <div className="btn-action btn-view">Xem</div>}
+                {view && <Link to={`/2020606605/admin/products/detail-product/${product.id}`} className="btn-action btn-view">Xem</Link>}
+                {edit && <Link to={`detail-product/${product.id}`} className="btn-action btn-edit">Sửa</Link>}
                 {remove && <div className="btn-action btn-remove" onClick={handleClickDelette}>Xoá</div>}
                 {undo && <div className="btn-action btn-undo" onClick={handleClickRestore}>Khôi phục</div>}
-            {/* {edit && <div className="btn-action btn-edit">Sửa</div>} */}
             </div>
         </div>
     )
