@@ -12,6 +12,7 @@ import { clearCart } from '../../redux/cartRedux';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { toastOption } from '../../constants';
+import { numberWithCommas } from '../../utils/formatMoney';
 
 export default function Order() {
     const dispatch = useDispatch()
@@ -39,8 +40,8 @@ export default function Order() {
         note: ""
     })
     const [methodShip, setMethodShip] = useState("Giao hàng tận nơi")
-    console.log("customer: ", customer);
-    console.log("methodShip: ", methodShip);
+    // console.log("customer: ", customer);
+    // console.log("methodShip: ", methodShip);
     useEffect(() => {
         const getProvinces = () => {
             fetch("https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1")
@@ -89,11 +90,14 @@ export default function Order() {
         getWards();
     }, [inforAddressShip.district])
 
+    // useEffect(() => {
+    //     inforAddressShip.ward && addressDetail ? setAddress(`${addressDetail}, ${inforAddressShip.ward.path_with_type}`) : setAddress("");
+    // }, [inforAddressShip.ward, addressDetail]);
     useEffect(() => {
-        inforAddressShip.ward && addressDetail ? setAddress(`${addressDetail}, ${inforAddressShip.ward.path_with_type}`) : setAddress("");
-    }, [inforAddressShip.ward, addressDetail]);
+        addressDetail && setAddress(`${addressDetail}`);
+    }, [addressDetail]);
 
-    console.log(address);
+    //console.log(address);
 
 
     const handleOpenListProvince = () => {
@@ -165,48 +169,48 @@ export default function Order() {
         }))
     }
     let checkCondition = () => {
-        if(!customer.fullname || !customer.phone){
+        if (!customer.fullname || !customer.phone) {
             toast.error('Bạn vui lòng nhập tên và số điện thoại !', toastOption);
             return false
-        }else {
-            if(!address){
+        } else {
+            if (!address) {
                 toast.error('Vui lòng chọn địa chỉ giao hàng !', toastOption);
                 return false
             }
         }
         return true
     }
-    console.log("products: ", cart.products);
+    //console.log("products: ", cart.products);
     const handleOrder = async () => {
         let check = checkCondition();
-        if(check){
+        if (check) {
             try {
-                const res = await axios.post(`${BASE_URL}/order`, 
-                {
-                    fullname: customer.fullname,
-                    phone: customer.phone,
-                    address: address,
-                    methodShip: methodShip,
-                    note: customer.note,
-                    total: cart.total,
-                    products: [...cart.products]
-                },
-                {
-                    headers: {Authorization: `Bearer ${localStorage[SUMMER_SHOP]}`}
-                })
+                const res = await axios.post(`${BASE_URL}/order`,
+                    {
+                        fullname: customer.fullname,
+                        phone: customer.phone,
+                        address: address,
+                        methodShip: methodShip,
+                        note: customer.note,
+                        total: cart.total,
+                        products: [...cart.products]
+                    },
+                    {
+                        headers: { Authorization: `Bearer ${localStorage[SUMMER_SHOP]}` }
+                    })
                 toast.success(res.data.message, toastOption);
                 dispatch(clearCart());
                 const clearCartCurrentUser = await axios.delete(`${BASE_URL}/cart/clear`, {
-                    headers: {Authorization: `Bearer ${localStorage[SUMMER_SHOP]}`}
+                    headers: { Authorization: `Bearer ${localStorage[SUMMER_SHOP]}` }
                 })
-                console.log({res, clearCartCurrentUser});
-                
+                console.log({ res, clearCartCurrentUser });
+
                 navigate("/user/purchase")
-                
+
             } catch (error) {
                 toast.error(error.response.data.message, toastOption);
             }
-            
+
         }
     }
     return (
@@ -351,7 +355,7 @@ export default function Order() {
                             Thành tiền :
                         </div>
                         <div className="price-order">
-                            {cart.total}đ
+                            {numberWithCommas(cart.total)}
                         </div>
                     </div>
                 </div>

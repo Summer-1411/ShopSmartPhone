@@ -11,7 +11,7 @@ export default function OrderConfirn() {
             const res = await axios.get(`${BASE_URL}/order/byAdmin?confirm=true`, {
                 headers: {Authorization: `Bearer ${localStorage[SUMMER_SHOP]}`}
             })
-            console.log(res.data);
+            //console.log(res.data);
             setListOrderConfirm(res.data.order)
             //setBill(res.data.order)
         }

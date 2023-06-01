@@ -12,7 +12,7 @@ export default function OrderSuccess() {
             const res = await axios.get(`${BASE_URL}/order/byAdmin?success=true`, {
                 headers: {Authorization: `Bearer ${localStorage[SUMMER_SHOP]}`}
             })
-            console.log(res.data);
+            //console.log(res.data);
             setListOrderSuccess(res.data.order)
             //setBill(res.data.order)
         }

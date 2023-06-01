@@ -10,6 +10,7 @@ import { toastOption } from '../../constants';
 
 export default function PendingOrder() {
     const [bill, setBill] = useState([])
+    const [billError, setBillError] = useState([])
     const currentUser = useSelector((state) => state.user.currentUser);
 
     useEffect(() => {
@@ -17,7 +18,9 @@ export default function PendingOrder() {
             const res = await axios.get(`${BASE_URL}/order/byCustomer`, {
                 headers: { Authorization: `Bearer ${localStorage[SUMMER_SHOP]}` }
             })
+            console.log(res.data);
             setBill(res.data.order)
+            setBillError(res.data.orderError)
         }
         getBill();
     }, [])
@@ -38,9 +41,13 @@ export default function PendingOrder() {
         }
 
     }
+    console.log(bill);
     return (
         <div>
             {bill.map(item => (
+                <PurchaseProduct key={item.id} bill={item} cancelOrder={cancelOrder} />
+            ))}
+            {billError.map(item => (
                 <PurchaseProduct key={item.id} bill={item} cancelOrder={cancelOrder} />
             ))}
         </div>

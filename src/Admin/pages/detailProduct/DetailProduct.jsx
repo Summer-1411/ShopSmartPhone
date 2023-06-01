@@ -1,21 +1,25 @@
 import { useEffect, useRef, useState } from 'react'
 import FilterItem from '../../components/filterItem/FilterItem'
-import './newProduct.scss'
+import './detailProduct.scss'
 import axios from 'axios'
-import { BASE_URL } from '../../../requestMethod'
+import { BASE_URL, IMAGE_LINK } from '../../../requestMethod'
 import { v4 as uuidv4 } from 'uuid';
 import HeadingFilter from '../../components/HeadingFilter/HeadingFilter'
 import { SUMMER_SHOP } from '../../../constants'
-import { useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import FilterItemUpdate from '../../components/filterItemUpdate/FilterItemUpdate'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { toastOption } from '../../../constants'
-export default function NewProduct() {
+export default function DetailProduct() {
+    const location = useLocation()
+    const id = location.pathname.split("/")[5];
     const navigate = useNavigate()
+    // console.log(id);
     const [listCategory, setListCategory] = useState([])
     const [listProducer, setListProducer] = useState([])
-    const [listFilter, setListFilter] = useState([])
-    const [newProduct, setNewProduct] = useState({
+    const [filters, setFilters] = useState([])
+    const [product, setProduct] = useState({
         name: "",
         description: "",
         information: "",
@@ -31,24 +35,35 @@ export default function NewProduct() {
         quantity: "",
         price: ""
     })
-    const [file, setFile] = useState(null)
-    const [avatar, setAvatar] = useState(null)
-    const prevAvatar = useRef()
-    const prevColor = useRef()
-    const { name, description, information, priceRange, status, id_owner, id_category } = newProduct
-    const { color, size, quantity, price } = filter
-    const handleChange = (e) => {
-        console.log(e.target.value);
-        setNewProduct(prev => ({ ...prev, [e.target.name]: e.target.value }))
-    }
-    const handleChangeFilter = (e) => {
-        setFilter(prev => ({ ...prev, [e.target.name]: e.target.value }))
-    }
+    const [countSold, setCountSold] = useState(0);
     useEffect(() => {
-        prevAvatar.current = avatar
-    }, [avatar])
-
-
+        const getProductDetail = async () => {
+            try {
+                const res = await axios.get(`${BASE_URL}/product/detail-admin/${id}`)
+                const result = await axios.get(`${BASE_URL}/stat/sold/${id}`)
+                //console.log(result.data);
+                setCountSold(result.data.total_quantity)
+                console.log(res.data);
+                setProduct({
+                    ...product,
+                    name: res.data.product.name,
+                    description: res.data.product.description,
+                    information: res.data.product.information,
+                    priceRange: res.data.product.priceRange,
+                    status: res.data.product.status,
+                    id_category: res.data.product.id_category,
+                    id_owner: res.data.product.id_owner,
+                    img: res.data.product.img,
+                })
+                setFilters(res.data.filter)
+                // setAvatar(res.data.product.img)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getProductDetail()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id])
     useEffect(() => {
         const getCategory = async () => {
             try {
@@ -69,6 +84,63 @@ export default function NewProduct() {
         getProducer()
         getCategory()
     }, [])
+    const [image, setImage] = useState(null)
+    const [avatar, setAvatar] = useState(null)
+    const { name, description, information, priceRange, status, id_owner, img, id_category } = product
+    const { color, size, quantity, price } = filter
+    const prevColor = useRef()
+    const handleChange = (e) => {
+        console.log(e.target.value);
+        setProduct(prev => ({ ...prev, [e.target.name]: e.target.value }))
+    }
+    const handleChangeFilter = (e) => {
+        setFilter(prev => ({ ...prev, [e.target.name]: e.target.value }))
+    }
+    const checkConditionAddProduct = () => {
+        if (!name || !priceRange) {
+            toast.error("Bạn chưa nhập đủ thông tin !", toastOption);
+            return false;
+        }
+        let price = Number(priceRange);
+        if (!Number.isInteger(price) || price <= 0) {
+            toast.error("Đơn giá chưa hợp lệ !", toastOption);
+            return false
+        }
+        return true;
+    }
+    const hanldeClickUpdate = async () => {
+        if (checkConditionAddProduct()) {
+            if (avatar) {
+                //console.log({ avatar });
+                const data = new FormData()
+                const fileName = Date.now() + avatar.name;
+                data.append("name", fileName)
+                data.append("file", avatar)
+                product.img = fileName
+                try {
+                    await axios.post(`${BASE_URL}/upload`, data)
+                } catch (error) {
+                    toast.error("Có lỗi trong quá trình upload ảnh !", toastOption);
+                    console.log(error);
+                }
+            }
+
+            console.log(product);
+            try {
+                await axios.put(`${BASE_URL}/product/update/${id}`, product,
+                    {
+                        headers: { Authorization: `Bearer ${localStorage[SUMMER_SHOP]}` }
+                    })
+                toast.success("Cập nhật thông tin sản phẩm thành công", toastOption);
+                navigate("/2020606605/admin/products")
+            } catch (error) {
+                toast.error("Có lỗi trong quá trình cập nhật !", toastOption);
+            }
+        } else {
+            console.log("error");
+        }
+
+    }
     const checkConditionAddFilter = () => {
         if (!color || !size || !quantity || !price) {
             toast.error("Bạn chưa nhập đủ thông tin !", toastOption);
@@ -77,116 +149,83 @@ export default function NewProduct() {
         let quanti = Number(quantity)
         let pric = Number(price)
         if (!Number.isInteger(quanti) || !Number.isInteger(pric)) {
-            toast.error("Số lượng và giá phải là số !", toastOption);
+            toast.error("Đơn giá hoặc số lượng phải là số !", toastOption);
             return false
         }
         if (quanti < 1 || pric <= 0) {
             toast.error("Đơn giá hoặc số lượng không hợp lệ !", toastOption);
             return false
         }
-        if (!file) {
-            toast.error("Bạn chưa chọn hình ảnh !", toastOption);
+        if (!image) {
+            toast.error("Bạn chưa chọn ảnh theo màu sắc !", toastOption);
             return false;
         }
         return true;
     }
-    console.log("color", color, prevColor.current)
-    const handleSaveFilter = async (e) => {
-        e.preventDefault()
+    const handleAddFilter = async () => {
+        // const {id_pro, size, color, quantity, price, img} = req.body
         if (checkConditionAddFilter()) {
             if (color !== prevColor.current) {
+                console.log("Upload file");
                 const data = new FormData()
-                const fileName = Date.now() + file.name;
+                const fileName = Date.now() + image.name;
                 data.append("name", fileName)
-                data.append("file", file)
-
+                data.append("file", image)
                 filter.img = fileName
-                filter.file = file
                 try {
                     await axios.post(`${BASE_URL}/upload`, data)
                 } catch (error) {
-                    toast.error("Có lỗi trong quá trình tải upload ảnh !", toastOption);
+                    toast.error("Có lỗi trong quá trình upload ảnh !", toastOption);
                 }
-                console.log("Upload file");
             }
-            filter.id = uuidv4()
-            setListFilter(prev => [...prev, filter])
-            toast.success("Đã thêm màu sắc, dung lượng cho sản phẩm", toastOption);
-        }
-        prevColor.current = color
-        // setFilter({
-        //     color: "",
-        //     size: "",
-        //     quantity: 0,
-        //     price: 0
-        // })
-    }
-    const checkConditionAddProduct = () => {
-        if (!name || !priceRange) {
-            toast.error("Bạn chưa nhập đủ thông tin sản phẩm !", toastOption);
-            return false;
-        }
-        let price = Number(priceRange);
-        if (!Number.isInteger(price) || price <= 0) {
-            toast.error("Giá sản phẩm chưa hợp lệ !", toastOption);
-            return false
-        }
-        if (!avatar) {
-            toast.error("Bạn chưa chọn ảnh đại diện sản phẩm !", toastOption);
-            return false;
-        }
-        if (listFilter.length === 0) {
-            toast.error("Bạn chưa thêm màu sắc, dung lượng !", toastOption);
-            return false;
-        }
-        return true;
-    }
-    const handleAddProduct = async (e) => {
-        if (checkConditionAddProduct()) {
-            //console.log({avatar});
-            const data = new FormData()
-            const fileName = Date.now() + avatar.name;
-            data.append("name", fileName)
-            data.append("file", avatar)
-
-            newProduct.img = fileName
+            filter.id_pro = id
             try {
-                await axios.post(`${BASE_URL}/upload`, data)
-            } catch (error) {
-                toast.error("Có lỗi trong quá trình tải upload ảnh !", toastOption);
-            }
-            try {
-                const res = await axios.post(`${BASE_URL}/product`,
-                    {
-                        ...newProduct,
-                        filters: [...listFilter]
-                    },
+                const res = await axios.post(`${BASE_URL}/filter`, filter,
                     {
                         headers: { Authorization: `Bearer ${localStorage[SUMMER_SHOP]}` }
                     })
-                toast.success("Thêm sản phẩm thành công", toastOption);
-                navigate("/2020606605/admin/products")
-                console.log(res);
+                filter.id = res.data.id
+                setFilters(prev => ([filter, ...prev]))
+                toast.success("Đã thêm màu sắc, dung lượng sản phẩm", toastOption);
             } catch (error) {
-                toast.error("Có lỗi trong quá trình thêm sản phẩm !", toastOption);
+                toast.error("Có lỗi trong quá trình thêm màu sắc, dung lượng !", toastOption);
             }
+            prevColor.current = color
+        } else {
+            console.log("Error");
         }
     }
-    const handleDeleteFilter = (id) => {
-        setListFilter(prev => prev.filter((fil) => fil.id !== id))
-        toast.info("Xoá màu sắc, dung lượng thành công !", toastOption);
+    //console.log(filter);
+    const handleDeleteFilter = async (id) => {
+        try {
+            await axios.put(`${BASE_URL}/filter/delete/${id}`, {},
+                {
+                    headers: { Authorization: `Bearer ${localStorage[SUMMER_SHOP]}` }
+                })
+            setFilters(prev => prev.filter((filter) => filter.id !== id))
+            toast.success("Xoá thành công ", toastOption);
+        } catch (error) {
+            toast.error("Có lỗi trong quá trình xoá !", toastOption);
+        }
     }
-    //console.log(listFilter);
     return (
-        <div className='newProduct-wrapper'>
-            <h1 className="newProduct-heading">
-                Thêm mới sản phẩm
-            </h1>
-            <div className="newProduct-container">
+        <div className='detailProduct-wrapper'>
+            <div className="detailProduct-heading">
+                Chi tiết sản phẩm
+            </div>
+            <div className="detailProduct-container">
                 <div className="left">
                     <div className="row-item-infor">
                         <div className="row-title">
-                            Tên sản phẩm*
+                            Đã bán
+                        </div>
+                        <div className="row-value">
+                            {countSold ? countSold : 0}
+                        </div>
+                    </div>
+                    <div className="row-item-infor">
+                        <div className="row-title">
+                            Tên sản phẩm
                         </div>
                         <div className="row-value">
                             <input
@@ -226,7 +265,7 @@ export default function NewProduct() {
                     </div>
                     <div className="row-item-infor">
                         <div className="row-title">
-                            Tầm giá*
+                            Tầm giá
                         </div>
                         <div className="row-value">
                             <input
@@ -282,18 +321,18 @@ export default function NewProduct() {
                                 className='select-element'
                             >
                                 {listProducer.map((producer) => (
-                                    <option style={{padding: "10px"}} key={producer.id} value={Number(producer.id)}>{producer.name}</option>
+                                    <option key={producer.id} value={Number(producer.id)}>{producer.name}</option>
                                 ))}
                             </select>
                         </div>
                     </div>
                 </div>
                 <div className="right">
-                    <img src={avatar && URL.createObjectURL(avatar)} alt="" className="img-product" />
-                    <input type="file" name="" className='input-file' id="fileAvatar-newProduct" accept=".png,.jpeg,.jpg" onChange={(e) => setAvatar(e.target.files[0])} />
-                    <label htmlFor="fileAvatar-newProduct">
+                    <img src={avatar ? URL.createObjectURL(avatar) : `${IMAGE_LINK}/${img}`} alt="" className="img-product" />
+                    <input type="file" name="" className='input-file' id="fileAvatar-detailProduct" accept=".png,.jpeg,.jpg" onChange={(e) => setAvatar(e.target.files[0])} />
+                    <label htmlFor="fileAvatar-detailProduct">
                         <div className="btn-select-img">
-                            Chọn ảnh*
+                            Chọn ảnh
                         </div>
                     </label>
                 </div>
@@ -337,26 +376,26 @@ export default function NewProduct() {
                         />
                     </div>
                     <div className="item-filter-img">
-                        <img src={file && URL.createObjectURL(file)} alt="" className="img-filter" />
-                        <input type="file" name="img" id='file' accept=".png,.jpeg,.jpg" onChange={(e) => setFile(e.target.files[0])} />
-                        <label htmlFor="file">
+                        <img src={image && URL.createObjectURL(image)} alt="" className="img-filter" />
+                        <input type="file" name="img" id='image-filter' accept=".png,.jpeg,.jpg" onChange={(e) => setImage(e.target.files[0])} />
+                        <label htmlFor="image-filter">
                             <div className="btn-select-img">
-                                Chọn ảnh*
+                                Chọn ảnh
                             </div>
                         </label>
                     </div>
                     <div className="item-filter">
-                        <button className="btn btn-add-filter" onClick={handleSaveFilter}>Lưu lại</button>
+                        <button className="btn btn-add-filter" onClick={handleAddFilter}>Thêm mới</button>
                     </div>
                 </div>
-            </div>
-            <div className="list-filter">
-                {listFilter.length > 0 && <HeadingFilter />}
-                {listFilter.map((filter) => (
-                    <FilterItem key={filter.id} filter={filter} handleDeleteFilter={handleDeleteFilter} />
+                <h1>Danh sách màu sắc, dung lượng sản phẩm</h1>
+                <HeadingFilter />
+                {filters.map((ft) => (
+                    <FilterItemUpdate key={ft.id} filterProduct={ft} handleDeleteFilter={handleDeleteFilter} />
                 ))}
             </div>
-            <button className='btn-add-newProduct' onClick={handleAddProduct}>Thêm mới sản phẩm</button>
+            <button className='btn btn-updateProduct' onClick={hanldeClickUpdate}>Cập nhật</button>
+            <Link className='btn btn-exit' to={"/2020606605/admin/products"}>Thoát</Link>
         </div>
     )
 }

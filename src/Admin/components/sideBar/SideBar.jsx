@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { logout } from '../../../redux/userRedux';
 import { clearCart } from '../../../redux/cartRedux';
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 export default function SideBar() {
     const dispatch = useDispatch()
     const location = useLocation().pathname;
@@ -38,8 +39,14 @@ export default function SideBar() {
                         <nav.icon /> {nav.title}
                     </Link>
                 ))}
+                <Link
+                    to="/"
+                    className="exit-admin"
+                >
+                    <HighlightOffIcon /> Thoát Admin
+                </Link>
                 <div
-                    className="navlink-item"
+                    className="btn-logout"
                     onClick={handleLogout}
                 >
                     <ExitToAppOutlinedIcon /> Đăng xuất

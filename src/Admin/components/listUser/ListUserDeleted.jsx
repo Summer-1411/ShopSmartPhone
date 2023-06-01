@@ -68,7 +68,7 @@ export default function ListUserDeleted() {
     }
     return (
         <div className='listUser-admin-wrapper'>
-            <h2>Danh sách khách hàng đã xoá</h2>
+            <div className='heading-page'>Danh sách khách hàng đã xoá</div>
             <div className="userAdmin-body">
                 <div className="head-table-userAdmin">
                     <div className="col-item">

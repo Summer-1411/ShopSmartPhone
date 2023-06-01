@@ -64,11 +64,11 @@ export default function ListUser() {
         {
             headers: { Authorization: `Bearer ${localStorage[SUMMER_SHOP]}` }
         })
-        console.log(res.data);
+        //console.log(res.data);
     }
     return (
         <div className='listUser-admin-wrapper'>
-            <h2>Danh sách khách hàng</h2>
+            <div className='heading-page'>Danh sách khách hàng</div>
             <div className="userAdmin-body">
                 <div className="head-table-userAdmin">
                     <div className="col-item">

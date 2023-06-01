@@ -12,7 +12,7 @@ export default function OrderPending() {
             const res = await axios.get(`${BASE_URL}/order/byAdmin`, {
                 headers: {Authorization: `Bearer ${localStorage[SUMMER_SHOP]}`}
             })
-            console.log(res.data);
+            //console.log(res.data);
             setListOrderPending(res.data.order)
             //setBill(res.data.order)
         }

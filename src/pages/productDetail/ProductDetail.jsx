@@ -19,6 +19,7 @@ export default function ProductDetail() {
     const cart = useSelector((state) => state.cart)
     const location = useLocation()
     const dispatch = useDispatch()
+    const [countSold, setCountSold] = useState(0);
     const id = location.pathname.split("/")[2];
     const [avatar, setAvatar] = useState("")
     // console.log({ location, id });
@@ -32,11 +33,15 @@ export default function ProductDetail() {
     const [size, setSize] = useState(null)
     const [color, setColor] = useState(null)
     const [quantity, setQuantity] = useState(1)
-
+    //console.log(quantity, typeof quantity);
+    
     useEffect(() => {
         const getProductDetail = async () => {
             try {
                 const res = await axios.get(`${BASE_URL}/product/detail/${id}`)
+                const result = await axios.get(`${BASE_URL}/stat/sold/${id}`)
+                //console.log(result.data);
+                setCountSold(result.data.total_quantity)
                 //console.log(res.data);
                 setInformation({
                     ...information,
@@ -60,7 +65,7 @@ export default function ProductDetail() {
         const getPriceByOption = async () => {
             try {
                 const res = await axios.get(`${BASE_URL}/filter/details?idpro=${id}&size=${size}&color=${color}`)
-                console.log(res.data);
+                //console.log(res.data);
                 setDetailProduct(res.data.detail)
             } catch (error) {
 
@@ -101,7 +106,7 @@ export default function ProductDetail() {
         size && handleChangeSize();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id, size])
-    console.log(quantity);
+    //console.log(quantity);
     const handleChangeQuantityOrder = (action) => {
         if (action === "increase") {
             if (quantity < detailProduct.quantity) {
@@ -113,7 +118,7 @@ export default function ProductDetail() {
             }
         }
     }
-    console.log("information:", information);
+    //console.log("information:", information);
     useEffect(() => {
         if (detailProduct.quantity < 1) {
             setQuantity(0)
@@ -121,7 +126,8 @@ export default function ProductDetail() {
             setQuantity(1)
         }
     }, [detailProduct.quantity])
-    console.log({ detailProduct });
+
+    //console.log({ detailProduct });
     //console.log("client",{filter: detailProduct.id, quantity: quantity});
     const handleAddToCart = async () => {
         if (!size || !color) {
@@ -129,6 +135,10 @@ export default function ProductDetail() {
             return;
         } else if (quantity < 1) {
             toast.error('Rất tiếc, sản phẩm này hiện đã hết hàng :(((', toastOption);
+            return;
+        }
+        else if(quantity > detailProduct.quantity){
+            toast.error('Rất tiếc, sản phẩm này không đủ số lượng :(((', toastOption);
             return;
         }
         if (size && color && quantity > 0) {
@@ -169,13 +179,24 @@ export default function ProductDetail() {
         }
     }
     const handleBuyNow = () => {
-        if (size && color && quantity > 0) {
+        if (!size || !color) {
+            toast.error('Vui lòng chọn màu sắc, dung lượng !', toastOption);
+            return;
+        } else if (quantity < 1) {
+            toast.error('Rất tiếc, sản phẩm này hiện đã hết hàng :(((', toastOption);
+            return;
+        }
+        else if(quantity > detailProduct.quantity){
+            toast.error('Rất tiếc, sản phẩm này không đủ số lượng :(((', toastOption);
+            return;
+        }
+        if (size && color && quantity > 0) { 
             handleAddToCart()
             navigate("/cart")
         } else if (quantity < 1) {
-            alert("Xin lỗi! Sản phẩm này đã hết :((")
+            toast.error("Xin lỗi! Sản phẩm này đã hết :((", toastOption);
         } else {
-            alert("Bạn vui lòng chọn màu sắc và số lượng !")
+            toast.error("Bạn vui lòng chọn màu sắc và số lượng !", toastOption);
         }
     }
     const formatPrice = () => {
@@ -232,7 +253,7 @@ export default function ProductDetail() {
                                         </div>
                                         <div className="info-item">
                                             <div className="info-item-number">
-                                                500
+                                                {countSold ? countSold : 0}
                                             </div>
                                             <div className="info-item-title">
                                                 Đã bán
@@ -304,7 +325,7 @@ export default function ProductDetail() {
                                                     type="text"
                                                     className='input-number'
                                                     value={quantity}
-                                                    onChange={(e) => setQuantity(e.target.value)}
+                                                    onChange={(e) => setQuantity(Number(e.target.value))}
                                                 />
                                                 <div className="btn-icon" onClick={() => handleChangeQuantityOrder("increase")}>
                                                     +

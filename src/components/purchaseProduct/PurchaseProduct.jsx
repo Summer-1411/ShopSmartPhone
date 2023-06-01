@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import React from './purchaseProduct.scss'
 import axios from 'axios';
-import { BASE_URL } from '../../requestMethod';
+import { BASE_URL, IMAGE_LINK } from '../../requestMethod';
 import { SUMMER_SHOP } from '../../constants';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import { numberWithCommas } from '../../utils/formatMoney';
@@ -36,7 +36,7 @@ export default function PurchaseProduct({ bill,cancelOrder }) {
             {products.map(pro => (
                 <div key={pro.id} className="purchaseProduct-content">
                     <div className="purchaseProduct-content-left">
-                        <img src={pro.img} alt="" className="img-product" />
+                        <img src={`${IMAGE_LINK}/${pro.img}`} alt="" className="img-product" />
                         <div className="infor-product">
                             <div className="name-product">{pro.name}</div>
                             <div className="filter-product">
@@ -69,6 +69,10 @@ export default function PurchaseProduct({ bill,cancelOrder }) {
                         <div className="title">Ngày đặt :</div>
                         <div className="date-value">{formattedDate}</div>
                     </div>
+                    <div className="date-order">
+                        <div className="title">Ghi chú :</div>
+                        <div className="date-value">{bill.note}</div>
+                    </div>
                 </div>
                 <div className="checkout-product-right">
                     <div className="sum-price-checkout">
@@ -81,11 +85,16 @@ export default function PurchaseProduct({ bill,cancelOrder }) {
                     </div>
                 </div>
             </div>
-            <div className="purchaseProduct-bottom">
+            {bill.status === 0 && (<div className="purchaseProduct-bottom">
                 <div className="btn-delete" onClick={() => setOpnenCancellation(true)}>
                     Huỷ đơn
                 </div>
-            </div>
+            </div>)}
+            {bill.status === -2 && (<div className="purchaseProduct-bottom">
+                <div className="order-reason">
+                    Đơn hàng của bạn đã bị huỷ vì lý do {bill.reason}, xin vui lòng thử lại !
+                </div>
+            </div>)}
             {opnenCancellation &&
                 <div className="wrapper-cancel" onClick={() => setOpnenCancellation(false)}>
                     <div className="cancel-container" onClick={(e) => { e.stopPropagation() }} >

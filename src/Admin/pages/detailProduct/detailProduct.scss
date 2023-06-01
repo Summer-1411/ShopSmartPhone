@@ -1,9 +1,12 @@
-.newProduct-wrapper {
+.detailProduct-wrapper {
     padding: 30px;
 
-    
+    .detailProduct-heading {
+        font-size: 20px;
+        font-weight: bold;
+    }
 
-    .newProduct-container {
+    .detailProduct-container {
         margin-top: 30px;
         display: flex;
         align-items: center;
@@ -31,15 +34,15 @@
                         font-size: 16px;
                     }
 
-                    input {
-                        padding: 10px;
-                        font-size: 16px;
-                    }
-
                     .select-element {
                         padding: 8px 12px;
                         border-radius: 4px;
                         outline: none;
+                    }
+
+                    input {
+                        padding: 10px;
+                        font-size: 16px;
                     }
                 }
             }
@@ -95,16 +98,21 @@
                     font-size: 16px;
                 }
 
+                .btn {
+                    padding: 10px;
+                    cursor: pointer;
+                }
+
                 .btn-add-filter {
-                    background-color: #007bff;
+                    background-color: #0069d9;
                     color: white;
-                    padding: 6px 16px;
+                    margin-top: 10px;
+                    padding: 5px 15px;
                     font-size: 16px;
                     border-radius: 4px;
-                    cursor: pointer;
-                    margin-top: 10px;
-                    outline: none;
                     border: none;
+                    outline: none;
+                    cursor: pointer;
                 }
             }
 
@@ -118,11 +126,11 @@
                 .btn-select-img {
                     background-color: #28a745;
                     color: white;
-                    padding: 4px 8px;
+                    margin-top: 10px;
+                    padding: 4px 12px;
                     font-size: 16px;
                     border-radius: 4px;
                     cursor: pointer;
-                    margin-top: 10px;
                 }
 
                 .img-filter {
@@ -137,16 +145,23 @@
             }
         }
     }
-
-    .btn-add-newProduct {
-        background-color: #17a2b8;
-        color: white;
-        padding: 8px 20px;
+    .btn {
+        padding: 5px 15px;
         font-size: 16px;
         border-radius: 4px;
         cursor: pointer;
-        margin-top: 10px;
-        outline: none;
+        color: white;
+        margin-top: 20px;
+    }
+    .btn-updateProduct {
+        background-color: #007bff;
+        margin-right: 20px;
         border: none;
+        outline: none;
+    }
+    .btn-exit {
+        background-color: #ffc107;
+        color: black;
+        text-decoration: none;
     }
 }

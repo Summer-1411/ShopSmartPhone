@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './orderItem.scss'
 import axios from 'axios';
-import { BASE_URL } from '../../requestMethod';
+import { BASE_URL, IMAGE_LINK } from '../../requestMethod';
 import { SUMMER_SHOP } from '../../constants';
 import { numberWithCommas } from '../../utils/formatMoney';
 import { formatDate } from '../../utils/formatDate';
@@ -24,7 +24,7 @@ export default function OrderItem({ order }) {
             {products.map(pro => (
                 <div key={pro.id} className="orderItem-content">
                     <div className="orderItem-content-left">
-                        <img src={pro.img} alt="" className="img-product" />
+                        <img src={`${IMAGE_LINK}/${pro.img}`} alt="" className="img-product" />
                         <div className="infor-product">
                             <div className="name-product">{pro.name}</div>
                             <div className="filter-product">

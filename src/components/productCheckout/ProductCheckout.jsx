@@ -1,10 +1,12 @@
+import { IMAGE_LINK } from '../../requestMethod'
+import { numberWithCommas } from '../../utils/formatMoney'
 import './productCheckout.scss'
 
 export default function ProductCheckout({product}) {
     return (
         <div className="productCheckout-content">
             <div className="productCheckout-content-left">
-                <img src={product.img} alt="" className="img-product" />
+                <img src={`${IMAGE_LINK}/${product.img}`} alt="" className="img-product" />
                 <div className="infor-product">
                     <div className="name-product">{product.name}</div>
                     <div className="filter-product">
@@ -17,7 +19,7 @@ export default function ProductCheckout({product}) {
             </div>
             <div className="productCheckout-content-right">
                 <div className="price-product">
-                    {product.price}đ
+                    {numberWithCommas(product.price)}
                 </div>
             </div>
         </div>
