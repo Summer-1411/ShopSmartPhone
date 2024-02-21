@@ -1,9 +1,9 @@
 // import axios from "axios";
 // import { SUMMER_SHOP } from "./constants";
 
-const BASE_URL = 'http://localhost:6868/api'
-const IMAGE_LINK = 'http://localhost:6868/images'
-const IMAGE_DEFAULT = 'http://localhost:6868/images/default.jpg'
+const BASE_URL = 'https://api-summer-shop.vercel.app/api'
+const IMAGE_LINK = 'https://api-summer-shop.vercel.app/images'
+const IMAGE_DEFAULT = 'https://api-summer-shop.vercel.app/images/default.jpg'
 // const TOKEN = JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user).currentUser.accessToken
 export {
     BASE_URL,
