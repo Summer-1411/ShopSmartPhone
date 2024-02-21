@@ -12,7 +12,7 @@ export default function OrderCancel() {
             const res = await axios.get(`${BASE_URL}/order/byAdmin?cancel=true`, {
                 headers: {Authorization: `Bearer ${localStorage[SUMMER_SHOP]}`}
             })
-            console.log("Check", res.data);
+            //console.log("Check", res.data);
             setListOrderCancel(res.data.order)
             //setBill(res.data.order)
         }

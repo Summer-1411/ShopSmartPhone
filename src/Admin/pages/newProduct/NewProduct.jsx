@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import FilterItem from '../../components/filterItem/FilterItem'
 import './newProduct.scss'
 import axios from 'axios'
@@ -7,6 +7,9 @@ import { v4 as uuidv4 } from 'uuid';
 import HeadingFilter from '../../components/HeadingFilter/HeadingFilter'
 import { SUMMER_SHOP } from '../../../constants'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { toastOption } from '../../../constants'
 export default function NewProduct() {
     const navigate = useNavigate()
     const [listCategory, setListCategory] = useState([])
@@ -25,11 +28,13 @@ export default function NewProduct() {
     const [filter, setFilter] = useState({
         color: "",
         size: "",
-        quantity: undefined,
-        price: undefined
+        quantity: "",
+        price: ""
     })
     const [file, setFile] = useState(null)
     const [avatar, setAvatar] = useState(null)
+    const prevAvatar = useRef()
+    const prevColor = useRef()
     const { name, description, information, priceRange, status, id_owner, id_category } = newProduct
     const { color, size, quantity, price } = filter
     const handleChange = (e) => {
@@ -39,8 +44,11 @@ export default function NewProduct() {
     const handleChangeFilter = (e) => {
         setFilter(prev => ({ ...prev, [e.target.name]: e.target.value }))
     }
-    console.log(filter);
-    console.log(listFilter);
+    useEffect(() => {
+        prevAvatar.current = avatar
+    }, [avatar])
+
+
     useEffect(() => {
         const getCategory = async () => {
             try {
@@ -61,72 +69,124 @@ export default function NewProduct() {
         getProducer()
         getCategory()
     }, [])
-    const handleSaveFilter = async () => {
-        if (file) {
-            const data = new FormData()
-            const fileName = Date.now() + file.name;
-            data.append("name", fileName)
-            data.append("file", file)
-
-            filter.img = fileName
-            filter.file = file
-            filter.id = uuidv4()
-            setListFilter(prev => [...prev, filter])
-            try {
-                await axios.post(`${BASE_URL}/upload`, data)
-            } catch (error) {
-                console.log(error);
-            }
+    const checkConditionAddFilter = () => {
+        if (!color || !size || !quantity || !price) {
+            toast.error("Bạn chưa nhập đủ thông tin !", toastOption);
+            return false;
         }
-        setFilter({
-            color: "",
-            size: "",
-            quantity: 0,
-            price: 0
-        })
-        setFile(null)
+        let quanti = Number(quantity)
+        let pric = Number(price)
+        if (!Number.isInteger(quanti) || !Number.isInteger(pric)) {
+            toast.error("Số lượng và giá phải là số !", toastOption);
+            return false
+        }
+        if (quanti < 1 || pric <= 0) {
+            toast.error("Đơn giá hoặc số lượng không hợp lệ !", toastOption);
+            return false
+        }
+        if (!file) {
+            toast.error("Bạn chưa chọn hình ảnh !", toastOption);
+            return false;
+        }
+        return true;
     }
-    const handleAddProduct = async () => {
-        try {
-            
-            if (avatar) {
-                console.log({avatar});
+    console.log("color", color, prevColor.current)
+    const handleSaveFilter = async (e) => {
+        e.preventDefault()
+        if (checkConditionAddFilter()) {
+            if (color !== prevColor.current) {
                 const data = new FormData()
-                const fileName = Date.now() + avatar.name;
+                const fileName = Date.now() + file.name;
                 data.append("name", fileName)
-                data.append("file", avatar)
-                
-                newProduct.img = fileName
+                data.append("file", file)
+
+                filter.img = fileName
+                filter.file = file
                 try {
                     await axios.post(`${BASE_URL}/upload`, data)
                 } catch (error) {
-                    console.log(error);
+                    toast.error("Có lỗi trong quá trình tải upload ảnh !", toastOption);
                 }
+                console.log("Upload file");
             }
-            const res = await axios.post(`${BASE_URL}/product`, 
-            {
-                ...newProduct,
-                filters: [...listFilter]
-            },
-            {
-                headers: {Authorization: `Bearer ${localStorage[SUMMER_SHOP]}`}
-            })
-            navigate("/2020606605/admin/products")
-            console.log(res);
-        } catch (error) {
-            console.log(error);
+            filter.id = uuidv4()
+            setListFilter(prev => [...prev, filter])
+            toast.success("Đã thêm màu sắc, dung lượng cho sản phẩm", toastOption);
+        }
+        prevColor.current = color
+        // setFilter({
+        //     color: "",
+        //     size: "",
+        //     quantity: 0,
+        //     price: 0
+        // })
+    }
+    const checkConditionAddProduct = () => {
+        if (!name || !priceRange) {
+            toast.error("Bạn chưa nhập đủ thông tin sản phẩm !", toastOption);
+            return false;
+        }
+        let price = Number(priceRange);
+        if (!Number.isInteger(price) || price <= 0) {
+            toast.error("Giá sản phẩm chưa hợp lệ !", toastOption);
+            return false
+        }
+        if (!avatar) {
+            toast.error("Bạn chưa chọn ảnh đại diện sản phẩm !", toastOption);
+            return false;
+        }
+        if (listFilter.length === 0) {
+            toast.error("Bạn chưa thêm màu sắc, dung lượng !", toastOption);
+            return false;
+        }
+        return true;
+    }
+    const handleAddProduct = async (e) => {
+        if (checkConditionAddProduct()) {
+            //console.log({avatar});
+            const data = new FormData()
+            const fileName = Date.now() + avatar.name;
+            data.append("name", fileName)
+            data.append("file", avatar)
+
+            newProduct.img = fileName
+            try {
+                await axios.post(`${BASE_URL}/upload`, data)
+            } catch (error) {
+                toast.error("Có lỗi trong quá trình tải upload ảnh !", toastOption);
+            }
+            try {
+                const res = await axios.post(`${BASE_URL}/product`,
+                    {
+                        ...newProduct,
+                        filters: [...listFilter]
+                    },
+                    {
+                        headers: { Authorization: `Bearer ${localStorage[SUMMER_SHOP]}` }
+                    })
+                toast.success("Thêm sản phẩm thành công", toastOption);
+                navigate("/2020606605/admin/products")
+                console.log(res);
+            } catch (error) {
+                toast.error("Có lỗi trong quá trình thêm sản phẩm !", toastOption);
+            }
         }
     }
+    const handleDeleteFilter = (id) => {
+        setListFilter(prev => prev.filter((fil) => fil.id !== id))
+        toast.info("Xoá màu sắc, dung lượng thành công !", toastOption);
+    }
+    //console.log(listFilter);
     return (
         <div className='newProduct-wrapper'>
-            <div className="newProduct-heading">
+            <h1 className="newProduct-heading">
                 Thêm mới sản phẩm
-            </div>
+            </h1>
             <div className="newProduct-container">
                 <div className="left">
                     <div className="row-item-infor">
                         <div className="row-title">
-                            Tên sản phẩm
+                            Tên sản phẩm*
                         </div>
                         <div className="row-value">
                             <input
@@ -166,7 +226,7 @@ export default function NewProduct() {
                     </div>
                     <div className="row-item-infor">
                         <div className="row-title">
-                            Tầm giá
+                            Tầm giá*
                         </div>
                         <div className="row-value">
                             <input
@@ -201,6 +261,7 @@ export default function NewProduct() {
                                 id="category"
                                 value={id_category}
                                 onChange={(e) => handleChange(e)}
+                                className='select-element'
                             >
                                 {listCategory.map((category) => (
                                     <option key={category.id} value={Number(category.id)}>{category.name}</option>
@@ -218,9 +279,10 @@ export default function NewProduct() {
                                 id="category"
                                 value={id_owner}
                                 onChange={(e) => handleChange(e)}
+                                className='select-element'
                             >
                                 {listProducer.map((producer) => (
-                                    <option key={producer.id} value={Number(producer.id)}>{producer.name}</option>
+                                    <option style={{padding: "10px"}} key={producer.id} value={Number(producer.id)}>{producer.name}</option>
                                 ))}
                             </select>
                         </div>
@@ -228,10 +290,10 @@ export default function NewProduct() {
                 </div>
                 <div className="right">
                     <img src={avatar && URL.createObjectURL(avatar)} alt="" className="img-product" />
-                    <input type="file" name="" className='input-file' id="fileAvatar" accept=".png,.jpeg,.jpg" onChange={(e) => setAvatar(e.target.files[0])} />
-                    <label htmlFor="fileAvatar">
+                    <input type="file" name="" className='input-file' id="fileAvatar-newProduct" accept=".png,.jpeg,.jpg" onChange={(e) => setAvatar(e.target.files[0])} />
+                    <label htmlFor="fileAvatar-newProduct">
                         <div className="btn-select-img">
-                            Chọn ảnh
+                            Chọn ảnh*
                         </div>
                     </label>
                 </div>
@@ -279,7 +341,7 @@ export default function NewProduct() {
                         <input type="file" name="img" id='file' accept=".png,.jpeg,.jpg" onChange={(e) => setFile(e.target.files[0])} />
                         <label htmlFor="file">
                             <div className="btn-select-img">
-                                Chọn ảnh
+                                Chọn ảnh*
                             </div>
                         </label>
                     </div>
@@ -291,10 +353,10 @@ export default function NewProduct() {
             <div className="list-filter">
                 {listFilter.length > 0 && <HeadingFilter />}
                 {listFilter.map((filter) => (
-                    <FilterItem key={uuidv4()} filter={filter} />
+                    <FilterItem key={filter.id} filter={filter} handleDeleteFilter={handleDeleteFilter} />
                 ))}
             </div>
-            <button onClick={handleAddProduct}>Thêm mới sản phẩm</button>
+            <button className='btn-add-newProduct' onClick={handleAddProduct}>Thêm mới sản phẩm</button>
         </div>
     )
 }

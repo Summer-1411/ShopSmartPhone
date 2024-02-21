@@ -10,7 +10,7 @@ export default function HeadingFilter({filter}) {
                 Dung lượng
             </div>
             <div className="item-filter">
-                Số lượng
+                Số lượng có
             </div>
             <div className="item-filter">
                 Đơn giá

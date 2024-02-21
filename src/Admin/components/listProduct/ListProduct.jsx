@@ -68,7 +68,7 @@ export default function ListProduct() {
     }
     return (
         <div className='listProduct-admin-wrapper'>
-            <h2>Danh sách sản phẩm</h2>
+            <h1>Danh sách sản phẩm</h1>
             <div className="productAdmin-body">
                 <div className="head-table-productAdmin">
                     <div className="col-item">

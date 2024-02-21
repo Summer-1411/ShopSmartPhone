@@ -3,8 +3,20 @@
     align-items: center;
     gap: 20px;
     margin-top: 20px;
+
     .item-filter {
         flex: 1;
+
+        .btn-delete-filter {
+            background-color: #dc3545;
+            color: white;
+            padding: 8px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            outline: none;
+            border: none;
+        }
     }
 
     .item-filter-img {

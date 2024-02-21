@@ -15,6 +15,9 @@
         cursor: pointer;
     }
     .list-navlink {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
         .navlink-item {
             padding: 10px 16px;
             color: #637381;
@@ -33,6 +36,30 @@
                 color: white;
                 background-color: #3056d3;
             }
+        }
+        .exit-admin {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            gap: 10px;
+            cursor: pointer;
+            padding: 10px 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            background-color: #343a40;
+            color: white;
+        }
+        .btn-logout {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            gap: 10px;
+            cursor: pointer;
+            padding: 10px 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            background-color: #dc3545;
+            color: white;
         }
     }
 }

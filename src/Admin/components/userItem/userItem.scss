@@ -19,6 +19,7 @@
                 border-radius: 5px;
                 cursor: pointer;
                 color: white;
+                text-decoration: none;
                 &.btn-view {
                     background-color: #007bff;
                     &:hover {
@@ -35,6 +36,12 @@
                     background-color: #6c757d;
                     &:hover {
                         background-color: #5a5d60;
+                    }
+                }
+                &.btn-edit {
+                    background-color: #28a745;
+                    &:hover {
+                        background-color: #239e40;
                     }
                 }
             }

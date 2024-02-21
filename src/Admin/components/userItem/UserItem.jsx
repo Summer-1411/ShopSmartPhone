@@ -1,9 +1,9 @@
+import { Link } from 'react-router-dom';
 import { IMAGE_DEFAULT, IMAGE_LINK } from '../../../requestMethod';
 import {  parseDate } from '../../../utils/formatDate';
 import './userItem.scss'
 
 export default function UserItem({view, remove, undo, user, handleDeleteUserItem, handleCancelDeleteUserItem}) {
-    //console.log(user);
     const handleClickDeleteUser = () => {
         handleDeleteUserItem(user.id)
     }
@@ -32,7 +32,7 @@ export default function UserItem({view, remove, undo, user, handleDeleteUserItem
                 {parseDate(user.createAt)}
             </div>
             <div className="col-item col-action-admin">
-                {view && <div className="btn-action btn-view">Xem</div>}
+                {view && <Link to={`/2020606605/admin/users/detail-user/${user.id}`} className="btn-action btn-view">Xem</Link>}
                 {remove && <div className="btn-action btn-remove" onClick={handleClickDeleteUser}>Xoá</div>}
                 {undo && <div className="btn-action btn-undo" onClick={handleClickRestoreUser}>Khôi phục</div>}
             </div>

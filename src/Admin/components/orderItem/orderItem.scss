@@ -12,15 +12,19 @@
     .col-item-2 {
         flex: 2;
         padding: 10px;
-
+        font-size: 16px;
         .username {
             font-size: 18px;
             font-weight: bold;
             color: black;
         }
-
-        .email-user {
-            font-size: 16px;
+        .order-note {
+            color: #3056d3;
+            font-weight: bold;
+        }
+        .order-reason {
+            color: #c82333;
+            font-weight: bold;
         }
     }
     .col-action {
@@ -81,5 +85,76 @@
         color: #c82333;
         font-size: 16px;
         font-weight: bold;
+    }
+    .wrapper-cancel {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(255, 255, 255, 0.359);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .cancel-container {
+            animation: show linear 0.25s;
+            padding: 25px;
+            background-color: white;
+            -webkit-box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .1), 0 2px 6px 2px rgba(60, 64, 67, .15);
+            -moz-box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .1), 0 2px 6px 2px rgba(60, 64, 67, .15);
+            box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .1), 0 2px 6px 2px rgba(60, 64, 67, .15);
+
+            .cancel-heading {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 20px;
+                color: #ee4d2d;
+                
+                font-weight: bold;
+                margin-bottom: 20px;
+            }
+            .cancel-reason {
+                display: flex;
+                gap: 10px;
+                margin-bottom: 20px;
+                align-items: center;
+                .cancel-reason-label {
+                    font-size: 18px;
+
+                }
+                .cancel-reason-input {
+                    padding: 10px;
+                    flex: 1;
+                    font-size: 18px;
+                    outline: none;
+                }
+            }
+            .cancel-content {
+                display: flex;
+                align-items: center;
+                gap: 30px;
+                
+                .btn {
+                    cursor: pointer;
+                    color: white;
+                    padding: 10px 20px;
+                    flex: 1;
+                    text-align: center;
+                    border-radius: 5px;
+                    &:hover {
+                        opacity: 0.9;
+                    }
+                    &.btn-agree {
+                        background-color: rgb(40, 40, 211);
+
+                    }
+                    &.btn-cancel {
+                        background-color: orangered;
+                    }
+                }
+            }
+        }
     }
 }

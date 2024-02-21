@@ -12,7 +12,7 @@ export default function OrderRefuse() {
             const res = await axios.get(`${BASE_URL}/order/byAdmin?refuse=true`, {
                 headers: {Authorization: `Bearer ${localStorage[SUMMER_SHOP]}`}
             })
-            console.log(res.data);
+            //console.log(res.data);
             setListOrderRefuse(res.data.order)
             //setBill(res.data.order)
         }

@@ -1,6 +1,9 @@
 import './filterItem.scss'
 
-export default function FilterItem({filter}) {
+export default function FilterItem({filter, handleDeleteFilter}) {
+    const handleClickDelete = ()=> {
+        handleDeleteFilter(filter.id)
+    }
     return (
         <div className='filterItem-wrapper'>
             <div className="item-filter">
@@ -19,7 +22,7 @@ export default function FilterItem({filter}) {
                 <img src={filter.file && URL.createObjectURL(filter.file)} alt="" className="img-filter" />
             </div>
             <div className="item-filter">
-                <button className="btn btn-delete-filter">Xoa</button>
+                <button className="btn btn-delete-filter" onClick={handleClickDelete}>Xoá</button>
             </div>
         </div>
     )

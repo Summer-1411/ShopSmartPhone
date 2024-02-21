@@ -1,97 +1,152 @@
 .newProduct-wrapper {
     padding: 30px;
-    .newProduct-heading {
-        font-size: 20px;
-        font-weight: bold;
-    }
+
+    
 
     .newProduct-container {
         margin-top: 30px;
         display: flex;
         align-items: center;
         gap: 30px;
+
         .left {
             flex: 7;
+
             .row-item-infor {
                 display: flex;
                 align-items: center;
                 margin-bottom: 10px;
+
                 .row-title {
                     flex: 2;
                 }
+
                 .row-value {
                     flex: 8;
+
                     textarea,
                     input.text-input {
                         padding: 10px;
                         width: 100%;
                         font-size: 16px;
                     }
+
                     input {
                         padding: 10px;
                         font-size: 16px;
                     }
+
+                    .select-element {
+                        padding: 8px 12px;
+                        border-radius: 4px;
+                        outline: none;
+                    }
                 }
             }
         }
+
         .right {
             flex: 3;
+
             .img-product {
                 width: 300px;
                 height: 300px;
                 object-fit: cover;
             }
+
             .input-file {
                 display: none;
             }
+
             label {
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 margin-top: 20px;
+
                 .btn-select-img {
-                    background-color: white;
+                    background-color: #28a745;
                     color: white;
-                    border: 1px solid black;
                     padding: 5px 20px;
-                    color: black;
                     font-size: 16px;
+                    border-radius: 4px;
                     cursor: pointer;
                 }
             }
         }
     }
+
     .newFilter-product {
         margin-top: 30px;
         padding-bottom: 20px;
         border-bottom: 1px solid black;
+
         .newFilter-product-container {
             display: flex;
             align-items: center;
             gap: 20px;
+
             .item-filter {
                 flex: 1;
+
                 input {
                     width: 100%;
                     padding: 10px;
-                        font-size: 16px;
+                    font-size: 16px;
+                }
+
+                .btn-add-filter {
+                    background-color: #007bff;
+                    color: white;
+                    padding: 6px 16px;
+                    font-size: 16px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    margin-top: 10px;
+                    outline: none;
+                    border: none;
                 }
             }
+
             .item-filter-img {
                 flex: 2;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 flex-direction: column;
+
+                .btn-select-img {
+                    background-color: #28a745;
+                    color: white;
+                    padding: 4px 8px;
+                    font-size: 16px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    margin-top: 10px;
+                }
+
                 .img-filter {
                     width: 100px;
                     height: 100px;
                     object-fit: cover;
                 }
+
                 input {
                     display: none;
                 }
             }
         }
+    }
+
+    .btn-add-newProduct {
+        background-color: #17a2b8;
+        color: white;
+        padding: 8px 20px;
+        font-size: 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
+        outline: none;
+        border: none;
     }
 }

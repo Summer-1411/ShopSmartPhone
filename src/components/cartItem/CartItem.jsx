@@ -3,7 +3,7 @@ import './cartItem.scss'
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { removeProduct } from '../../redux/cartRedux';
 import axios from 'axios';
-import { BASE_URL } from '../../requestMethod';
+import { BASE_URL, IMAGE_LINK } from '../../requestMethod';
 import { SUMMER_SHOP } from '../../constants';
 import { numberWithCommas } from '../../utils/formatMoney';
 import { toast } from 'react-toastify';
@@ -28,7 +28,7 @@ export default function CartItem({product}) {
     return (
         <tr className='wrapper-row'>
             <td className='infor-product'>
-                <img src={product.img} alt="" />
+                <img src={`${IMAGE_LINK}/${product.img}`} alt="" />
                 <div className="name-product">
                     {product.name}
                 </div>

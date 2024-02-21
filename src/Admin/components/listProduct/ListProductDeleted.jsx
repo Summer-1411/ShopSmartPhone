@@ -68,7 +68,7 @@ export default function ListProductDeleted() {
     }
     return (
         <div className='listProduct-admin-wrapper'>
-            <h2>Danh sách sản phẩm đã xoá</h2>
+            <h1>Danh sách sản phẩm đã xoá</h1>
             <div className="productAdmin-body">
                 <div className="head-table-productAdmin">
                     <div className="col-item">

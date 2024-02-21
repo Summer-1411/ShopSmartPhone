@@ -25,6 +25,8 @@ export default function UserAdmin() {
         <div className='userAdmin-wrapper'>
             <div className="userAdmin-heading">
                 <Link to="" className="link-item heading-title">Danh sách người dùng</Link>
+                <Link to="deleted-user" className="link-item user-deleted">
+=======
                 <Link to="deleted-user" className=" link-item user-deleted">
                     Đã xoá {`(${countUserDeleted})`}
                 </Link>
