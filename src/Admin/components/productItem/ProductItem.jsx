@@ -1,4 +1,3 @@
-
 import './productItem.scss'
 import {  parseDate } from '../../../utils/formatDate';
 import { numberWithCommas } from '../../../utils/formatMoney';

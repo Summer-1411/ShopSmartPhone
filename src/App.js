@@ -1,4 +1,3 @@
-
 import './style.scss';
 import {
   createBrowserRouter,
@@ -82,7 +81,7 @@ function App() {
       children: [
         {
           path: "/",
-          element: <Home />
+element: <Home />
         },
         {
           path: "/product/:id",
@@ -203,7 +202,7 @@ function App() {
               element: <OrderRefuse />
             },
             {
-              path: "cancel",
+path: "cancel",
               element: <OrderCancel />
             }
           ]
